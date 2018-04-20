@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bdqn.sl.mapper.SysDictionaryMapper">
+	<resultMap id="BaseResultMap" type="com.bdqn.sl.pojo.SysDictionary">
+		<id column="dictionaryId" property="dictionaryid" jdbcType="INTEGER" />
+		<result column="typeCode" property="typecode" jdbcType="VARCHAR" />
+		<result column="typeName" property="typename" jdbcType="VARCHAR" />
+		<result column="valueName" property="valuename" jdbcType="VARCHAR" />
+		<result column="described" property="described" jdbcType="VARCHAR" />
+		<result column="createUid" property="createuid" jdbcType="INTEGER" />
+		<result column="created" property="created" jdbcType="TIMESTAMP" />
+		<result column="updateUid" property="updateuid" jdbcType="INTEGER" />
+		<result column="updated" property="updated" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		dictionaryId, typeCode, typeName, valueName, described,
+		createUid, created,
+		updateUid,
+		updated
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.bdqn.sl.pojo.SysDictionaryExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<choose>
+			<when test="columns!=null">
+				${columns}
+			</when>
+			<otherwise>
+				<include refid="Base_Column_List" />
+			</otherwise>
+		</choose>
+		from sys_dictionary
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="groupByClause != null">
+			group by ${groupByClause}
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from sys_dictionary
+		where dictionaryId =
+		#{dictionaryid,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		sys_dictionary
+		where dictionaryId = #{dictionaryid,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.bdqn.sl.pojo.SysDictionaryExample">
+		delete from sys_dictionary
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.bdqn.sl.pojo.SysDictionary">
+		insert into sys_dictionary
+		(dictionaryId, typeCode, typeName,
+		valueName, described, createUid,
+		created, updateUid, updated
+		)
+		values (#{dictionaryid,jdbcType=INTEGER},
+		#{typecode,jdbcType=VARCHAR},
+		#{typename,jdbcType=VARCHAR},
+		#{valuename,jdbcType=VARCHAR}, #{described,jdbcType=VARCHAR},
+		#{createuid,jdbcType=INTEGER},
+		#{created,jdbcType=TIMESTAMP},
+		#{updateuid,jdbcType=INTEGER},
+		#{updated,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.bdqn.sl.pojo.SysDictionary">
+		insert into sys_dictionary
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="dictionaryid != null">
+				dictionaryId,
+			</if>
+			<if test="typecode != null">
+				typeCode,
+			</if>
+			<if test="typename != null">
+				typeName,
+			</if>
+			<if test="valuename != null">
+				valueName,
+			</if>
+			<if test="described != null">
+				described,
+			</if>
+			<if test="createuid != null">
+				createUid,
+			</if>
+			<if test="created != null">
+				created,
+			</if>
+			<if test="updateuid != null">
+				updateUid,
+			</if>
+			<if test="updated != null">
+				updated,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="dictionaryid != null">
+				#{dictionaryid,jdbcType=INTEGER},
+			</if>
+			<if test="typecode != null">
+				#{typecode,jdbcType=VARCHAR},
+			</if>
+			<if test="typename != null">
+				#{typename,jdbcType=VARCHAR},
+			</if>
+			<if test="valuename != null">
+				#{valuename,jdbcType=VARCHAR},
+			</if>
+			<if test="described != null">
+				#{described,jdbcType=VARCHAR},
+			</if>
+			<if test="createuid != null">
+				#{createuid,jdbcType=INTEGER},
+			</if>
+			<if test="created != null">
+				#{created,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateuid != null">
+				#{updateuid,jdbcType=INTEGER},
+			</if>
+			<if test="updated != null">
+				#{updated,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.bdqn.sl.pojo.SysDictionaryExample"
+		resultType="java.lang.Integer">
+		select count(*) from sys_dictionary
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update sys_dictionary
+		<set>
+			<if test="record.dictionaryid != null">
+				dictionaryId = #{record.dictionaryid,jdbcType=INTEGER},
+			</if>
+			<if test="record.typecode != null">
+				typeCode = #{record.typecode,jdbcType=VARCHAR},
+			</if>
+			<if test="record.typename != null">
+				typeName = #{record.typename,jdbcType=VARCHAR},
+			</if>
+			<if test="record.valuename != null">
+				valueName = #{record.valuename,jdbcType=VARCHAR},
+			</if>
+			<if test="record.described != null">
+				described = #{record.described,jdbcType=VARCHAR},
+			</if>
+			<if test="record.createuid != null">
+				createUid = #{record.createuid,jdbcType=INTEGER},
+			</if>
+			<if test="record.created != null">
+				created = #{record.created,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.updateuid != null">
+				updateUid = #{record.updateuid,jdbcType=INTEGER},
+			</if>
+			<if test="record.updated != null">
+				updated = #{record.updated,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update sys_dictionary
+		set dictionaryId =
+		#{record.dictionaryid,jdbcType=INTEGER},
+		typeCode =
+		#{record.typecode,jdbcType=VARCHAR},
+		typeName =
+		#{record.typename,jdbcType=VARCHAR},
+		valueName =
+		#{record.valuename,jdbcType=VARCHAR},
+		described =
+		#{record.described,jdbcType=VARCHAR},
+		createUid =
+		#{record.createuid,jdbcType=INTEGER},
+		created =
+		#{record.created,jdbcType=TIMESTAMP},
+		updateUid =
+		#{record.updateuid,jdbcType=INTEGER},
+		updated =
+		#{record.updated,jdbcType=TIMESTAMP}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.bdqn.sl.pojo.SysDictionary">
+		update sys_dictionary
+		<set>
+			<if test="typecode != null">
+				typeCode = #{typecode,jdbcType=VARCHAR},
+			</if>
+			<if test="typename != null">
+				typeName = #{typename,jdbcType=VARCHAR},
+			</if>
+			<if test="valuename != null">
+				valueName = #{valuename,jdbcType=VARCHAR},
+			</if>
+			<if test="described != null">
+				described = #{described,jdbcType=VARCHAR},
+			</if>
+			<if test="createuid != null">
+				createUid = #{createuid,jdbcType=INTEGER},
+			</if>
+			<if test="created != null">
+				created = #{created,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateuid != null">
+				updateUid = #{updateuid,jdbcType=INTEGER},
+			</if>
+			<if test="updated != null">
+				updated = #{updated,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where dictionaryId = #{dictionaryid,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.bdqn.sl.pojo.SysDictionary">
+		update
+		sys_dictionary
+		set typeCode = #{typecode,jdbcType=VARCHAR},
+		typeName =
+		#{typename,jdbcType=VARCHAR},
+		valueName =
+		#{valuename,jdbcType=VARCHAR},
+		described =
+		#{described,jdbcType=VARCHAR},
+		createUid =
+		#{createuid,jdbcType=INTEGER},
+		created = #{created,jdbcType=TIMESTAMP},
+		updateUid = #{updateuid,jdbcType=INTEGER},
+		updated =
+		#{updated,jdbcType=TIMESTAMP}
+		where dictionaryId =
+		#{dictionaryid,jdbcType=INTEGER}
+	</update>
+</mapper>

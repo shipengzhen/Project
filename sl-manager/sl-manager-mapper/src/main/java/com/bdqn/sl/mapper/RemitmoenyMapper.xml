@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bdqn.sl.mapper.RemitmoenyMapper" >
+  <resultMap id="BaseResultMap" type="com.bdqn.sl.pojo.Remitmoeny" >
+    <id column="rmId" property="rmid" jdbcType="INTEGER" />
+    <result column="rmMoney" property="rmmoney" jdbcType="REAL" />
+    <result column="rmType" property="rmtype" jdbcType="INTEGER" />
+    <result column="rmDoc" property="rmdoc" jdbcType="VARCHAR" />
+    <result column="rmNum" property="rmnum" jdbcType="VARCHAR" />
+    <result column="createUid" property="createuid" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="updateUid" property="updateuid" jdbcType="INTEGER" />
+    <result column="updated" property="updated" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    rmId, rmMoney, rmType, rmDoc, rmNum, createUid, created, updateUid, updated
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bdqn.sl.pojo.RemitmoenyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from remitmoeny
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from remitmoeny
+    where rmId = #{rmid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from remitmoeny
+    where rmId = #{rmid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bdqn.sl.pojo.RemitmoenyExample" >
+    delete from remitmoeny
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bdqn.sl.pojo.Remitmoeny" >
+    insert into remitmoeny (rmId, rmMoney, rmType, 
+      rmDoc, rmNum, createUid, 
+      created, updateUid, updated
+      )
+    values (#{rmid,jdbcType=INTEGER}, #{rmmoney,jdbcType=REAL}, #{rmtype,jdbcType=INTEGER}, 
+      #{rmdoc,jdbcType=VARCHAR}, #{rmnum,jdbcType=VARCHAR}, #{createuid,jdbcType=INTEGER}, 
+      #{created,jdbcType=TIMESTAMP}, #{updateuid,jdbcType=INTEGER}, #{updated,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bdqn.sl.pojo.Remitmoeny" >
+    insert into remitmoeny
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rmid != null" >
+        rmId,
+      </if>
+      <if test="rmmoney != null" >
+        rmMoney,
+      </if>
+      <if test="rmtype != null" >
+        rmType,
+      </if>
+      <if test="rmdoc != null" >
+        rmDoc,
+      </if>
+      <if test="rmnum != null" >
+        rmNum,
+      </if>
+      <if test="createuid != null" >
+        createUid,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="updateuid != null" >
+        updateUid,
+      </if>
+      <if test="updated != null" >
+        updated,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rmid != null" >
+        #{rmid,jdbcType=INTEGER},
+      </if>
+      <if test="rmmoney != null" >
+        #{rmmoney,jdbcType=REAL},
+      </if>
+      <if test="rmtype != null" >
+        #{rmtype,jdbcType=INTEGER},
+      </if>
+      <if test="rmdoc != null" >
+        #{rmdoc,jdbcType=VARCHAR},
+      </if>
+      <if test="rmnum != null" >
+        #{rmnum,jdbcType=VARCHAR},
+      </if>
+      <if test="createuid != null" >
+        #{createuid,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateuid != null" >
+        #{updateuid,jdbcType=INTEGER},
+      </if>
+      <if test="updated != null" >
+        #{updated,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bdqn.sl.pojo.RemitmoenyExample" resultType="java.lang.Integer" >
+    select count(*) from remitmoeny
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update remitmoeny
+    <set >
+      <if test="record.rmid != null" >
+        rmId = #{record.rmid,jdbcType=INTEGER},
+      </if>
+      <if test="record.rmmoney != null" >
+        rmMoney = #{record.rmmoney,jdbcType=REAL},
+      </if>
+      <if test="record.rmtype != null" >
+        rmType = #{record.rmtype,jdbcType=INTEGER},
+      </if>
+      <if test="record.rmdoc != null" >
+        rmDoc = #{record.rmdoc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rmnum != null" >
+        rmNum = #{record.rmnum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createuid != null" >
+        createUid = #{record.createuid,jdbcType=INTEGER},
+      </if>
+      <if test="record.created != null" >
+        created = #{record.created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateuid != null" >
+        updateUid = #{record.updateuid,jdbcType=INTEGER},
+      </if>
+      <if test="record.updated != null" >
+        updated = #{record.updated,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update remitmoeny
+    set rmId = #{record.rmid,jdbcType=INTEGER},
+      rmMoney = #{record.rmmoney,jdbcType=REAL},
+      rmType = #{record.rmtype,jdbcType=INTEGER},
+      rmDoc = #{record.rmdoc,jdbcType=VARCHAR},
+      rmNum = #{record.rmnum,jdbcType=VARCHAR},
+      createUid = #{record.createuid,jdbcType=INTEGER},
+      created = #{record.created,jdbcType=TIMESTAMP},
+      updateUid = #{record.updateuid,jdbcType=INTEGER},
+      updated = #{record.updated,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bdqn.sl.pojo.Remitmoeny" >
+    update remitmoeny
+    <set >
+      <if test="rmmoney != null" >
+        rmMoney = #{rmmoney,jdbcType=REAL},
+      </if>
+      <if test="rmtype != null" >
+        rmType = #{rmtype,jdbcType=INTEGER},
+      </if>
+      <if test="rmdoc != null" >
+        rmDoc = #{rmdoc,jdbcType=VARCHAR},
+      </if>
+      <if test="rmnum != null" >
+        rmNum = #{rmnum,jdbcType=VARCHAR},
+      </if>
+      <if test="createuid != null" >
+        createUid = #{createuid,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateuid != null" >
+        updateUid = #{updateuid,jdbcType=INTEGER},
+      </if>
+      <if test="updated != null" >
+        updated = #{updated,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where rmId = #{rmid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bdqn.sl.pojo.Remitmoeny" >
+    update remitmoeny
+    set rmMoney = #{rmmoney,jdbcType=REAL},
+      rmType = #{rmtype,jdbcType=INTEGER},
+      rmDoc = #{rmdoc,jdbcType=VARCHAR},
+      rmNum = #{rmnum,jdbcType=VARCHAR},
+      createUid = #{createuid,jdbcType=INTEGER},
+      created = #{created,jdbcType=TIMESTAMP},
+      updateUid = #{updateuid,jdbcType=INTEGER},
+      updated = #{updated,jdbcType=TIMESTAMP}
+    where rmId = #{rmid,jdbcType=INTEGER}
+  </update>
+</mapper>

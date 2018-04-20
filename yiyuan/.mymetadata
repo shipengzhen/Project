@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="yiyuan"
+  id="myeclipse.1517665953989"
+  context-root="/yiyuan"
+  j2ee-spec="6.0"
+  archive="yiyuan.war">
+  <attributes>
+    <attribute name="webrootdir" value="&lt;prjroot&gt;" />
+  </attributes>
+</project-module>
+

@@ -1,0 +1,7 @@
+0:0:0:0:0:0:0:1 - - [05/Mar/2018:16:13:54 +0800] "GET /hms-manage HTTP/1.1" 404 - http-bio-8080-exec-1 0
+0:0:0:0:0:0:0:1 - - [05/Mar/2018:16:13:57 +0800] "GET /hms-manage HTTP/1.1" 404 - http-bio-8080-exec-3 0
+0:0:0:0:0:0:0:1 - - [05/Mar/2018:16:13:59 +0800] "GET /hms-manager/HMS/goIndx HTTP/1.1" 404 - http-bio-8080-exec-4 0
+0:0:0:0:0:0:0:1 - - [05/Mar/2018:16:14:02 +0800] "GET /hms-manager HTTP/1.1" 404 - http-bio-8080-exec-5 0
+0:0:0:0:0:0:0:1 - - [05/Mar/2018:16:14:30 +0800] "GET /hms-manager HTTP/1.1" 404 - http-bio-8080-exec-1 0
+0:0:0:0:0:0:0:1 - - [05/Mar/2018:16:14:33 +0800] "GET /hms-manager HTTP/1.1" 404 - http-bio-8080-exec-2 0
+0:0:0:0:0:0:0:1 - - [05/Mar/2018:16:14:37 +0800] "GET / HTTP/1.1" 404 - http-bio-8080-exec-3 0

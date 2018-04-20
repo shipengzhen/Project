@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bdqn.sl.mapper.SetmealMapper">
+	<resultMap id="BaseResultMap" type="com.bdqn.sl.pojo.Setmeal">
+		<id column="smId" property="smid" jdbcType="INTEGER" />
+		<result column="smName" property="smname" jdbcType="VARCHAR" />
+		<result column="smTypeId" property="smtypeid" jdbcType="INTEGER" />
+		<result column="smPrice" property="smprice" jdbcType="REAL" />
+		<result column="smStatic" property="smstatic" jdbcType="INTEGER" />
+		<result column="smNumber" property="smnumber" jdbcType="INTEGER" />
+		<result column="smDoc" property="smdoc" jdbcType="VARCHAR" />
+		<result column="createUid" property="createuid" jdbcType="INTEGER" />
+		<result column="created" property="created" jdbcType="TIMESTAMP" />
+		<result column="updateUid" property="updateuid" jdbcType="INTEGER" />
+		<result column="updated" property="updated" jdbcType="TIMESTAMP" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		smId, smName, smTypeId, smPrice, smStatic, smNumber, smDoc, createUid,
+		created, updateUid,
+		updated
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.bdqn.sl.pojo.SetmealExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<choose>
+			<when test="columns!=null">
+				${columns}
+			</when>
+			<otherwise>
+				<include refid="Base_Column_List" />
+			</otherwise>
+		</choose>
+		from setmeal
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		<if test="limit != null">
+			limit ${limit}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from setmeal
+		where smId = #{smid,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from setmeal
+		where smId = #{smid,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.bdqn.sl.pojo.SetmealExample">
+		delete from setmeal
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.bdqn.sl.pojo.Setmeal">
+		insert into setmeal (smId, smName, smTypeId,
+		smPrice, smStatic, smNumber,
+		smDoc, createUid, created,
+		updateUid, updated)
+		values (#{smid,jdbcType=INTEGER}, #{smname,jdbcType=VARCHAR},
+		#{smtypeid,jdbcType=INTEGER},
+		#{smprice,jdbcType=REAL}, #{smstatic,jdbcType=INTEGER}, #{smnumber,jdbcType=INTEGER},
+		#{smdoc,jdbcType=VARCHAR}, #{createuid,jdbcType=INTEGER},
+		#{created,jdbcType=TIMESTAMP},
+		#{updateuid,jdbcType=INTEGER}, #{updated,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective" parameterType="com.bdqn.sl.pojo.Setmeal">
+		insert into setmeal
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="smid != null">
+				smId,
+			</if>
+			<if test="smname != null">
+				smName,
+			</if>
+			<if test="smtypeid != null">
+				smTypeId,
+			</if>
+			<if test="smprice != null">
+				smPrice,
+			</if>
+			<if test="smstatic != null">
+				smStatic,
+			</if>
+			<if test="smnumber != null">
+				smNumber,
+			</if>
+			<if test="smdoc != null">
+				smDoc,
+			</if>
+			<if test="createuid != null">
+				createUid,
+			</if>
+			<if test="created != null">
+				created,
+			</if>
+			<if test="updateuid != null">
+				updateUid,
+			</if>
+			<if test="updated != null">
+				updated,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="smid != null">
+				#{smid,jdbcType=INTEGER},
+			</if>
+			<if test="smname != null">
+				#{smname,jdbcType=VARCHAR},
+			</if>
+			<if test="smtypeid != null">
+				#{smtypeid,jdbcType=INTEGER},
+			</if>
+			<if test="smprice != null">
+				#{smprice,jdbcType=REAL},
+			</if>
+			<if test="smstatic != null">
+				#{smstatic,jdbcType=INTEGER},
+			</if>
+			<if test="smnumber != null">
+				#{smnumber,jdbcType=INTEGER},
+			</if>
+			<if test="smdoc != null">
+				#{smdoc,jdbcType=VARCHAR},
+			</if>
+			<if test="createuid != null">
+				#{createuid,jdbcType=INTEGER},
+			</if>
+			<if test="created != null">
+				#{created,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateuid != null">
+				#{updateuid,jdbcType=INTEGER},
+			</if>
+			<if test="updated != null">
+				#{updated,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.bdqn.sl.pojo.SetmealExample"
+		resultType="java.lang.Integer">
+		select count(*) from setmeal
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update setmeal
+		<set>
+			<if test="record.smid != null">
+				smId = #{record.smid,jdbcType=INTEGER},
+			</if>
+			<if test="record.smname != null">
+				smName = #{record.smname,jdbcType=VARCHAR},
+			</if>
+			<if test="record.smtypeid != null">
+				smTypeId = #{record.smtypeid,jdbcType=INTEGER},
+			</if>
+			<if test="record.smprice != null">
+				smPrice = #{record.smprice,jdbcType=REAL},
+			</if>
+			<if test="record.smstatic != null">
+				smStatic = #{record.smstatic,jdbcType=INTEGER},
+			</if>
+			<if test="record.smnumber != null">
+				smNumber = #{record.smnumber,jdbcType=INTEGER},
+			</if>
+			<if test="record.smdoc != null">
+				smDoc = #{record.smdoc,jdbcType=VARCHAR},
+			</if>
+			<if test="record.createuid != null">
+				createUid = #{record.createuid,jdbcType=INTEGER},
+			</if>
+			<if test="record.created != null">
+				created = #{record.created,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.updateuid != null">
+				updateUid = #{record.updateuid,jdbcType=INTEGER},
+			</if>
+			<if test="record.updated != null">
+				updated = #{record.updated,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update setmeal
+		set smId = #{record.smid,jdbcType=INTEGER},
+		smName = #{record.smname,jdbcType=VARCHAR},
+		smTypeId = #{record.smtypeid,jdbcType=INTEGER},
+		smPrice = #{record.smprice,jdbcType=REAL},
+		smStatic = #{record.smstatic,jdbcType=INTEGER},
+		smNumber = #{record.smnumber,jdbcType=INTEGER},
+		smDoc = #{record.smdoc,jdbcType=VARCHAR},
+		createUid = #{record.createuid,jdbcType=INTEGER},
+		created = #{record.created,jdbcType=TIMESTAMP},
+		updateUid = #{record.updateuid,jdbcType=INTEGER},
+		updated = #{record.updated,jdbcType=TIMESTAMP}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.bdqn.sl.pojo.Setmeal">
+		update setmeal
+		<set>
+			<if test="smname != null">
+				smName = #{smname,jdbcType=VARCHAR},
+			</if>
+			<if test="smtypeid != null">
+				smTypeId = #{smtypeid,jdbcType=INTEGER},
+			</if>
+			<if test="smprice != null">
+				smPrice = #{smprice,jdbcType=REAL},
+			</if>
+			<if test="smstatic != null">
+				smStatic = #{smstatic,jdbcType=INTEGER},
+			</if>
+			<if test="smnumber != null">
+				smNumber = #{smnumber,jdbcType=INTEGER},
+			</if>
+			<if test="smdoc != null">
+				smDoc = #{smdoc,jdbcType=VARCHAR},
+			</if>
+			<if test="createuid != null">
+				createUid = #{createuid,jdbcType=INTEGER},
+			</if>
+			<if test="created != null">
+				created = #{created,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updateuid != null">
+				updateUid = #{updateuid,jdbcType=INTEGER},
+			</if>
+			<if test="updated != null">
+				updated = #{updated,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where smId = #{smid,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.bdqn.sl.pojo.Setmeal">
+		update setmeal
+		set smName = #{smname,jdbcType=VARCHAR},
+		smTypeId = #{smtypeid,jdbcType=INTEGER},
+		smPrice = #{smprice,jdbcType=REAL},
+		smStatic = #{smstatic,jdbcType=INTEGER},
+		smNumber = #{smnumber,jdbcType=INTEGER},
+		smDoc = #{smdoc,jdbcType=VARCHAR},
+		createUid = #{createuid,jdbcType=INTEGER},
+		created = #{created,jdbcType=TIMESTAMP},
+		updateUid = #{updateuid,jdbcType=INTEGER},
+		updated = #{updated,jdbcType=TIMESTAMP}
+		where smId = #{smid,jdbcType=INTEGER}
+	</update>
+</mapper>

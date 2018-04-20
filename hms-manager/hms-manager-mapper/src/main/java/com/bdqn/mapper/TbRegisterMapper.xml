@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bdqn.mapper.TbRegisterMapper" >
+  <resultMap id="BaseResultMap" type="com.bdqn.pojo.TbRegister" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="idcard" property="idcard" jdbcType="VARCHAR" />
+    <result column="seId" property="seid" jdbcType="VARCHAR" />
+    <result column="cost" property="cost" jdbcType="DECIMAL" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="isfy" property="isfy" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="occupation" property="occupation" jdbcType="VARCHAR" />
+    <result column="age" property="age" jdbcType="INTEGER" />
+    <result column="cfz" property="cfz" jdbcType="VARCHAR" />
+    <result column="opdid" property="opdid" jdbcType="INTEGER" />
+    <result column="doctorId" property="doctorid" jdbcType="INTEGER" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="cash_pledge" property="cashPledge" jdbcType="DECIMAL" />
+    <result column="HFcost" property="hfcost" jdbcType="DECIMAL" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="updated" property="updated" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, name, idcard, seId, cost, phone, isfy, sex, occupation, age, cfz, opdid, doctorId, 
+    remarks, cash_pledge, HFcost, status, created, updated
+  </sql>
+ 
+  
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bdqn.pojo.TbRegisterExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_register
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+   <!-- 查询 -->
+  
+  <select id="findReList" parameterType="com.bdqn.pojo.TbRegisterSelect"  resultType="com.bdqn.pojo.TbRegister">
+  	select id,(select`doctorName` from `tb_doctors` where doctorId=tb_register.`doctorId`) as doctorName,
+	`created`,(select name from tb_opd where id=tb_register.`opdid`) as opdname,status
+	from `tb_register` where  1=1
+	<if test="id != null">
+		and	id like CONCAT('%',#{id},'%') 
+	</if>
+	<if test="doctorname != null and doctorname !=''">
+		 and doctorid in (select doctorId from `tb_doctors` where `doctorName` like  CONCAT('%',#{doctorname},'%'))   
+	</if>
+	<if test="opdName!=null and opdName !=''">
+		 and opdid in (select id from `tb_opd` where `name` like  CONCAT('%',#{opdName},'%')) 
+	</if>
+	<if test="begin != null and end != null">
+		 and  #{begin}&lt; created &lt; #{end} 
+	</if>
+	<if test="begin!=null and end == null">
+		 and  #{begin}&lt; created 
+	</if>
+	<if test="begin==null and end !=null">
+		 and  created &lt; #{end} 
+	</if>
+		 order by updated desc
+  </select>
+  
+  
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_register
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_register
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bdqn.pojo.TbRegisterExample" >
+    delete from tb_register
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bdqn.pojo.TbRegister" >
+    insert into tb_register (id, name, idcard, 
+      seId, cost, phone, 
+      isfy, sex, occupation, 
+      age, cfz, opdid, doctorId, 
+      remarks, cash_pledge, HFcost, 
+      status, created, updated
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{idcard,jdbcType=VARCHAR}, 
+      #{seid,jdbcType=VARCHAR}, #{cost,jdbcType=DECIMAL}, #{phone,jdbcType=VARCHAR}, 
+      #{isfy,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{occupation,jdbcType=VARCHAR}, 
+      #{age,jdbcType=INTEGER}, #{cfz,jdbcType=VARCHAR}, #{opdid,jdbcType=INTEGER}, #{doctorid,jdbcType=INTEGER}, 
+      #{remarks,jdbcType=VARCHAR}, #{cashPledge,jdbcType=DECIMAL}, #{hfcost,jdbcType=DECIMAL}, 
+      #{status,jdbcType=INTEGER}, #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bdqn.pojo.TbRegister" >
+    insert into tb_register
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="idcard != null" >
+        idcard,
+      </if>
+      <if test="seid != null" >
+        seId,
+      </if>
+      <if test="cost != null" >
+        cost,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="isfy != null" >
+        isfy,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="occupation != null" >
+        occupation,
+      </if>
+      <if test="age != null" >
+        age,
+      </if>
+      <if test="cfz != null" >
+        cfz,
+      </if>
+      <if test="opdid != null" >
+        opdid,
+      </if>
+      <if test="doctorid != null" >
+        doctorId,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="cashPledge != null" >
+        cash_pledge,
+      </if>
+      <if test="hfcost != null" >
+        HFcost,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="updated != null" >
+        updated,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null" >
+        #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="seid != null" >
+        #{seid,jdbcType=VARCHAR},
+      </if>
+      <if test="cost != null" >
+        #{cost,jdbcType=DECIMAL},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="isfy != null" >
+        #{isfy,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="occupation != null" >
+        #{occupation,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="cfz != null" >
+        #{cfz,jdbcType=VARCHAR},
+      </if>
+      <if test="opdid != null" >
+        #{opdid,jdbcType=INTEGER},
+      </if>
+      <if test="doctorid != null" >
+        #{doctorid,jdbcType=INTEGER},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="cashPledge != null" >
+        #{cashPledge,jdbcType=DECIMAL},
+      </if>
+      <if test="hfcost != null" >
+        #{hfcost,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated != null" >
+        #{updated,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bdqn.pojo.TbRegisterExample" resultType="java.lang.Integer" >
+    select count(*) from tb_register
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_register
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idcard != null" >
+        idcard = #{record.idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.seid != null" >
+        seId = #{record.seid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cost != null" >
+        cost = #{record.cost,jdbcType=DECIMAL},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isfy != null" >
+        isfy = #{record.isfy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.occupation != null" >
+        occupation = #{record.occupation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.age != null" >
+        age = #{record.age,jdbcType=INTEGER},
+      </if>
+      <if test="record.cfz != null" >
+        cfz = #{record.cfz,jdbcType=VARCHAR},
+      </if>
+      <if test="record.opdid != null" >
+        opdid = #{record.opdid,jdbcType=INTEGER},
+      </if>
+      <if test="record.doctorid != null" >
+        doctorId = #{record.doctorid,jdbcType=INTEGER},
+      </if>
+      <if test="record.remarks != null" >
+        remarks = #{record.remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cashPledge != null" >
+        cash_pledge = #{record.cashPledge,jdbcType=DECIMAL},
+      </if>
+      <if test="record.hfcost != null" >
+        HFcost = #{record.hfcost,jdbcType=DECIMAL},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.created != null" >
+        created = #{record.created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updated != null" >
+        updated = #{record.updated,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_register
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      idcard = #{record.idcard,jdbcType=VARCHAR},
+      seId = #{record.seid,jdbcType=VARCHAR},
+      cost = #{record.cost,jdbcType=DECIMAL},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      isfy = #{record.isfy,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=VARCHAR},
+      occupation = #{record.occupation,jdbcType=VARCHAR},
+      age = #{record.age,jdbcType=INTEGER},
+      cfz = #{record.cfz,jdbcType=VARCHAR},
+      opdid = #{record.opdid,jdbcType=INTEGER},
+      doctorId = #{record.doctorid,jdbcType=INTEGER},
+      remarks = #{record.remarks,jdbcType=VARCHAR},
+      cash_pledge = #{record.cashPledge,jdbcType=DECIMAL},
+      HFcost = #{record.hfcost,jdbcType=DECIMAL},
+      status = #{record.status,jdbcType=INTEGER},
+      created = #{record.created,jdbcType=TIMESTAMP},
+      updated = #{record.updated,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bdqn.pojo.TbRegister" >
+    update tb_register
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="idcard != null" >
+        idcard = #{idcard,jdbcType=VARCHAR},
+      </if>
+      <if test="seid != null" >
+        seId = #{seid,jdbcType=VARCHAR},
+      </if>
+      <if test="cost != null" >
+        cost = #{cost,jdbcType=DECIMAL},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="isfy != null" >
+        isfy = #{isfy,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="occupation != null" >
+        occupation = #{occupation,jdbcType=VARCHAR},
+      </if>
+      <if test="age != null" >
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="cfz != null" >
+        cfz = #{cfz,jdbcType=VARCHAR},
+      </if>
+      <if test="opdid != null" >
+        opdid = #{opdid,jdbcType=INTEGER},
+      </if>
+      <if test="doctorid != null" >
+        doctorId = #{doctorid,jdbcType=INTEGER},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="cashPledge != null" >
+        cash_pledge = #{cashPledge,jdbcType=DECIMAL},
+      </if>
+      <if test="hfcost != null" >
+        HFcost = #{hfcost,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated != null" >
+        updated = #{updated,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bdqn.pojo.TbRegister" >
+    update tb_register
+    set name = #{name,jdbcType=VARCHAR},
+      idcard = #{idcard,jdbcType=VARCHAR},
+      seId = #{seid,jdbcType=VARCHAR},
+      cost = #{cost,jdbcType=DECIMAL},
+      phone = #{phone,jdbcType=VARCHAR},
+      isfy = #{isfy,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      occupation = #{occupation,jdbcType=VARCHAR},
+      age = #{age,jdbcType=INTEGER},
+      cfz = #{cfz,jdbcType=VARCHAR},
+      opdid = #{opdid,jdbcType=INTEGER},
+      doctorId = #{doctorid,jdbcType=INTEGER},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      cash_pledge = #{cashPledge,jdbcType=DECIMAL},
+      HFcost = #{hfcost,jdbcType=DECIMAL},
+      status = #{status,jdbcType=INTEGER},
+      created = #{created,jdbcType=TIMESTAMP},
+      updated = #{updated,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

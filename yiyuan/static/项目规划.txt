@@ -1,0 +1,149 @@
+		枣庄医院管理系统
+		
+
+
+		
+		
+		
+
+四、数据库 yiyuan
+
+	1、Menu 资源菜单表
+		mid			int	 PRIMARY KEY AUTO_INCREMENT COMMENT '菜单项ID - 主键，自增',
+		text		varchar(20)	 not null 	COMMENT '项名称',
+		href		varchar(50)	 not null 	COMMENT '项URL路径',
+		myx			int 		 not null 	COMMENT '项是否有效 - (1有效,0无效)',
+		
+	2、Role 角色表
+		rid			int PRIMARY KEY AUTO_INCREMENT COMMENT 'ID - 主键，自增',
+		rname		varchar(50)	 not null	COMMENT '角色名称',
+		rstate		int			 not null	COMMENT '状态(1启用,0禁用)'
+
+	3、Jur 权限分配表 [对多对]
+		Jid			int	 PRIMARY KEY AUTO_INCREMENT COMMENT 'id好 - 主键，自增',
+		rid			int 		 not null	COMMENT '角色ID - 外键'
+		mid			int 		 not null	COMMENT '菜单项ID - 好的'
+		
+		--额外字段：rname角色名称，mname菜单项名称
+		
+	4、Usee 用户表
+		uid			int	 PRIMARY KEY AUTO_INCREMENT COMMENT '用户ID - 主键,自增1000,1 ',
+		uname		varchar(20)	 not null	COMMENT '登录昵称 - 唯一 ', 
+		password	varchar(20)	 not null	COMMENT '密码',
+		ustate		int 		 not null	COMMENT '账号状态 -> 1正常,0禁用',
+		uzsname		varchar(10)	 not null	COMMENT	'真实姓名',
+		uemail		varchar(50)	 not null	COMMENT '邮箱',
+		rid			int			 not null	COMMENT '所属角色ID，外键',
+		
+		--额外对象：Role角色对象
+	
+	5、KeRome科室表（急诊科，骨科……）
+		kid			int PRIMARY KEY AUTO_INCREMENT COMMENT '科室ID - 主键,自增 ',
+		kname		varchar(20) not null	COMMENT '科室名称'
+	
+	6、Doctor 门诊医生
+		did			int PRIMARY KEY AUTO_INCREMENT COMMENT '医生编号 - 主键，自增(1000,1)',
+		d_zsname	varchar(20)	 not null	COMMENT '医生姓名 - 唯一',
+		d_card		varchar(20) not null	COMMENT '身份证号',
+		d_phone		varchar(11)	 not null	COMMENT '手机号',
+		d_zuoji		varchar(20) not null	COMMENT '座机',
+		d_sex		varchar(2)  not null	COMMENT '性别',
+		d_csday		TIMESTAMP	 not null	COMMENT '出生年月日',
+		d_age		int 		 not null	COMMENT '年龄',
+		d_email		varchar(50) not null	COMMENT '电子邮箱',
+		d_xueli		varchar(10) not null   COMMENT '学历',
+		d_beizhu	varchar(500) not null	COMMENT '备注',
+
+		kid		int 		not null	COMMENT '所属科室id，外键',
+		#uid		int 		not null	COMMENT '所属user账号ID，外键',
+		
+		--额外字段：所属科室名字kname
+		--额外对象：所属user对象
+		
+	7、 GuaHao 挂号记录表-也可以叫病历表
+		gid			int PRIMARY KEY AUTO_INCREMENT COMMENT 'ID号，主键，自增(1001)',
+		gname		varchar(20)	not null	COMMENT '挂号人姓名',
+		g_card		varchar(20) not null	COMMENT '身份证号',
+		g_shebao	varchar(50) not null	COMMENT '社保号',
+		g_money		double		not null	COMMENT '挂号费',
+		g_phone		varchar(11)	 not null	COMMENT '联系电话',
+		g_zifei		int 		not null	COMMENT '是否自费 - 1是 2否',
+		g_sex		varchar(2)  not null	COMMENT '性别',
+		g_age		int 		 not null	COMMENT '年龄',
+		g_zhiye		varchar(50)	 			COMMENT '职业',
+		g_cf		int 		not null	COMMENT '初诊还是复诊,1初 2复'
+		g_beizhu	varchar(500) not null	COMMENT '备注',
+		g_status  	varchar(20) not null 	COMMENT '状态(已挂号,已住院,已出院,已退号)',
+		g_data		TIMESTAMP 				COMMENT '挂号日期',
+		
+		kid 		int 		not null	COMMENT '所挂科室ID，外键',
+		did			int 		not null	COMMENT '主治医生ID',
+		
+		--额外字段：所挂科室名字快 kname，主治医生名字 d_zsname
+		
+	8、ZhuYuan 住院记录表
+		zid			int	 PRIMARY KEY AUTO_INCREMENT COMMENT 'ID号，主键，自增',
+		z_huli		varchar(50)	 not null	COMMENT '护理',
+		z_cw		varchar(50)	 not null	COMMENT '床位号',
+		z_yajin		varchar(50) not null	COMMENT '交付押金，也即余额',
+		z_zydate	TIMESTAMP	 not null	COMMENT '入院时间',
+		z_zy_state	varchar(20) not null	COMMENT '住院状态(已住院，已出院)',
+		z_js_state	varchar(20) not null	COMMENT '结算状态(未结算，已结算)',
+		
+		gid			int 		not null	COMMENT '病例ID，外键',
+		--额外对象：主治医生对象
+		
+	9、Pay 收费项目表
+		pid			int	 PRIMARY KEY AUTO_INCREMENT COMMENT 'ID号，主键，自增',
+		pname		varchar(20)	 not null 	COMMENT '收费项名称',
+		pmoney		double 		not null	COMMENT '收费金额',
+		pdate		TIMESTAMP	not null	COMMENT '创建日期',
+		
+	10、PayRed 收费项目登记表 [多对多] -> 哪个病号进行了哪个收费项目
+		prid		int	 PRIMARY KEY AUTO_INCREMENT COMMENT 'ID号，主键，自增',
+		pdate		TIMESTAMP	not null	COMMENT '收费日期',
+		
+		gid			int		not null		COMMENT '病历号ID，外键',
+		pid			int		not null		COMMENT '收费项目ID，外键',
+		--额外字段：收费项名字pname
+		
+	11、Yao	药品管理
+		yno			varchar(50)				COMMENT '药品编号,自定义编号，主键',
+		y_img		varchar(50)				COMMENT '药品图片名称',
+		y_jj		double		not null	COMMENT '进价',
+		y_sj		double		not null	COMMENT '售价',
+		y_name		varchar(50) not null	COMMENT '药品名称',
+		y_type		int 		not null	COMMENT '药品类型(1-处方药，2-中药，3-西药)',
+		y_ms		varchar(100) not null	COMMENT '简单描述'
+		y_baozhi	int 		not null	COMMENT '保质期,单位/月',
+		y_xxms		varchar(500) not null	COMMENT '详细描述',
+		y_sccs		varchar(100) not null 	COMMENT '生产厂商',
+		y_state		varchar(100) not null  COMMENT '药品状态(销售中,维护中)',
+		y_kucun		int 		 not null	COMMENT '库存'
+		
+	12、FaYao 在线发药记录表
+		fid			int	 PRIMARY KEY AUTO_INCREMENT COMMENT 'id，主键,自增',
+		gid			int 	not null		COMMENT '病号ID，外键',
+		yno			varchar(50) 	not null		COMMENT '药品ID，外键',
+		f_num		int 	not null		COMMENT '该发多少',
+		f_ynum		int 	not null		COMMENT '已经发了多少',
+		f_wnum		int 	not null		COMMENT '还剩多少没发'
+	
+		--额外字段：
+	
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	
+	
+		
+		
+		

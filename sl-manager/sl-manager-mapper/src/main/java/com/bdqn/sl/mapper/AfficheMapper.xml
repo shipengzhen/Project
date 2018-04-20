@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bdqn.sl.mapper.AfficheMapper" >
+  <resultMap id="BaseResultMap" type="com.bdqn.sl.pojo.Affiche" >
+    <id column="gId" property="gid" jdbcType="INTEGER" />
+    <result column="gTitle" property="gtitle" jdbcType="VARCHAR" />
+    <result column="beginDate" property="begindate" jdbcType="TIMESTAMP" />
+    <result column="endDate" property="enddate" jdbcType="TIMESTAMP" />
+    <result column="gDoc" property="gdoc" jdbcType="VARCHAR" />
+    <result column="createUid" property="createuid" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="updateUid" property="updateuid" jdbcType="INTEGER" />
+    <result column="updated" property="updated" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    gId, gTitle, beginDate, endDate, gDoc, createUid, created, updateUid, updated
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bdqn.sl.pojo.AfficheExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from affiche
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from affiche
+    where gId = #{gid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from affiche
+    where gId = #{gid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bdqn.sl.pojo.AfficheExample" >
+    delete from affiche
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bdqn.sl.pojo.Affiche" >
+    insert into affiche (gId, gTitle, beginDate, 
+      endDate, gDoc, createUid, 
+      created, updateUid, updated
+      )
+    values (#{gid,jdbcType=INTEGER}, #{gtitle,jdbcType=VARCHAR}, #{begindate,jdbcType=TIMESTAMP}, 
+      #{enddate,jdbcType=TIMESTAMP}, #{gdoc,jdbcType=VARCHAR}, #{createuid,jdbcType=INTEGER}, 
+      #{created,jdbcType=TIMESTAMP}, #{updateuid,jdbcType=INTEGER}, #{updated,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bdqn.sl.pojo.Affiche" >
+    insert into affiche
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gid != null" >
+        gId,
+      </if>
+      <if test="gtitle != null" >
+        gTitle,
+      </if>
+      <if test="begindate != null" >
+        beginDate,
+      </if>
+      <if test="enddate != null" >
+        endDate,
+      </if>
+      <if test="gdoc != null" >
+        gDoc,
+      </if>
+      <if test="createuid != null" >
+        createUid,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="updateuid != null" >
+        updateUid,
+      </if>
+      <if test="updated != null" >
+        updated,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gid != null" >
+        #{gid,jdbcType=INTEGER},
+      </if>
+      <if test="gtitle != null" >
+        #{gtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="begindate != null" >
+        #{begindate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enddate != null" >
+        #{enddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gdoc != null" >
+        #{gdoc,jdbcType=VARCHAR},
+      </if>
+      <if test="createuid != null" >
+        #{createuid,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateuid != null" >
+        #{updateuid,jdbcType=INTEGER},
+      </if>
+      <if test="updated != null" >
+        #{updated,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bdqn.sl.pojo.AfficheExample" resultType="java.lang.Integer" >
+    select count(*) from affiche
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update affiche
+    <set >
+      <if test="record.gid != null" >
+        gId = #{record.gid,jdbcType=INTEGER},
+      </if>
+      <if test="record.gtitle != null" >
+        gTitle = #{record.gtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.begindate != null" >
+        beginDate = #{record.begindate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.enddate != null" >
+        endDate = #{record.enddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gdoc != null" >
+        gDoc = #{record.gdoc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createuid != null" >
+        createUid = #{record.createuid,jdbcType=INTEGER},
+      </if>
+      <if test="record.created != null" >
+        created = #{record.created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateuid != null" >
+        updateUid = #{record.updateuid,jdbcType=INTEGER},
+      </if>
+      <if test="record.updated != null" >
+        updated = #{record.updated,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update affiche
+    set gId = #{record.gid,jdbcType=INTEGER},
+      gTitle = #{record.gtitle,jdbcType=VARCHAR},
+      beginDate = #{record.begindate,jdbcType=TIMESTAMP},
+      endDate = #{record.enddate,jdbcType=TIMESTAMP},
+      gDoc = #{record.gdoc,jdbcType=VARCHAR},
+      createUid = #{record.createuid,jdbcType=INTEGER},
+      created = #{record.created,jdbcType=TIMESTAMP},
+      updateUid = #{record.updateuid,jdbcType=INTEGER},
+      updated = #{record.updated,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bdqn.sl.pojo.Affiche" >
+    update affiche
+    <set >
+      <if test="gtitle != null" >
+        gTitle = #{gtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="begindate != null" >
+        beginDate = #{begindate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enddate != null" >
+        endDate = #{enddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gdoc != null" >
+        gDoc = #{gdoc,jdbcType=VARCHAR},
+      </if>
+      <if test="createuid != null" >
+        createUid = #{createuid,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateuid != null" >
+        updateUid = #{updateuid,jdbcType=INTEGER},
+      </if>
+      <if test="updated != null" >
+        updated = #{updated,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where gId = #{gid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bdqn.sl.pojo.Affiche" >
+    update affiche
+    set gTitle = #{gtitle,jdbcType=VARCHAR},
+      beginDate = #{begindate,jdbcType=TIMESTAMP},
+      endDate = #{enddate,jdbcType=TIMESTAMP},
+      gDoc = #{gdoc,jdbcType=VARCHAR},
+      createUid = #{createuid,jdbcType=INTEGER},
+      created = #{created,jdbcType=TIMESTAMP},
+      updateUid = #{updateuid,jdbcType=INTEGER},
+      updated = #{updated,jdbcType=TIMESTAMP}
+    where gId = #{gid,jdbcType=INTEGER}
+  </update>
+</mapper>

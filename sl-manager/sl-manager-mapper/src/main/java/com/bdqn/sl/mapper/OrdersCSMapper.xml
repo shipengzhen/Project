@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bdqn.sl.mapper.OrdersCSMapper" >
+  <resultMap id="BaseResultMap" type="com.bdqn.sl.pojo.OrdersCS" >
+    <id column="ocs_oid" property="ocsOid" jdbcType="INTEGER" />
+    <id column="ocs_csid" property="ocsCsid" jdbcType="INTEGER" />
+    <id column="csType" property="cstype" jdbcType="INTEGER" />
+    <result column="ocs_cnum" property="ocsCnum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ocs_oid, ocs_csid, csType, ocs_cnum
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bdqn.sl.pojo.OrdersCSExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from orders_cs
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.bdqn.sl.pojo.OrdersCSKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from orders_cs
+    where ocs_oid = #{ocsOid,jdbcType=INTEGER}
+      and ocs_csid = #{ocsCsid,jdbcType=INTEGER}
+      and csType = #{cstype,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.bdqn.sl.pojo.OrdersCSKey" >
+    delete from orders_cs
+    where ocs_oid = #{ocsOid,jdbcType=INTEGER}
+      and ocs_csid = #{ocsCsid,jdbcType=INTEGER}
+      and csType = #{cstype,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bdqn.sl.pojo.OrdersCSExample" >
+    delete from orders_cs
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bdqn.sl.pojo.OrdersCS" >
+    insert into orders_cs (ocs_oid, ocs_csid, csType, 
+      ocs_cnum)
+    values (#{ocsOid,jdbcType=INTEGER}, #{ocsCsid,jdbcType=INTEGER}, #{cstype,jdbcType=INTEGER}, 
+      #{ocsCnum,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bdqn.sl.pojo.OrdersCS" >
+    insert into orders_cs
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ocsOid != null" >
+        ocs_oid,
+      </if>
+      <if test="ocsCsid != null" >
+        ocs_csid,
+      </if>
+      <if test="cstype != null" >
+        csType,
+      </if>
+      <if test="ocsCnum != null" >
+        ocs_cnum,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ocsOid != null" >
+        #{ocsOid,jdbcType=INTEGER},
+      </if>
+      <if test="ocsCsid != null" >
+        #{ocsCsid,jdbcType=INTEGER},
+      </if>
+      <if test="cstype != null" >
+        #{cstype,jdbcType=INTEGER},
+      </if>
+      <if test="ocsCnum != null" >
+        #{ocsCnum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bdqn.sl.pojo.OrdersCSExample" resultType="java.lang.Integer" >
+    select count(*) from orders_cs
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update orders_cs
+    <set >
+      <if test="record.ocsOid != null" >
+        ocs_oid = #{record.ocsOid,jdbcType=INTEGER},
+      </if>
+      <if test="record.ocsCsid != null" >
+        ocs_csid = #{record.ocsCsid,jdbcType=INTEGER},
+      </if>
+      <if test="record.cstype != null" >
+        csType = #{record.cstype,jdbcType=INTEGER},
+      </if>
+      <if test="record.ocsCnum != null" >
+        ocs_cnum = #{record.ocsCnum,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update orders_cs
+    set ocs_oid = #{record.ocsOid,jdbcType=INTEGER},
+      ocs_csid = #{record.ocsCsid,jdbcType=INTEGER},
+      csType = #{record.cstype,jdbcType=INTEGER},
+      ocs_cnum = #{record.ocsCnum,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bdqn.sl.pojo.OrdersCS" >
+    update orders_cs
+    <set >
+      <if test="ocsCnum != null" >
+        ocs_cnum = #{ocsCnum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ocs_oid = #{ocsOid,jdbcType=INTEGER}
+      and ocs_csid = #{ocsCsid,jdbcType=INTEGER}
+      and csType = #{cstype,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bdqn.sl.pojo.OrdersCS" >
+    update orders_cs
+    set ocs_cnum = #{ocsCnum,jdbcType=INTEGER}
+    where ocs_oid = #{ocsOid,jdbcType=INTEGER}
+      and ocs_csid = #{ocsCsid,jdbcType=INTEGER}
+      and csType = #{cstype,jdbcType=INTEGER}
+  </update>
+</mapper>

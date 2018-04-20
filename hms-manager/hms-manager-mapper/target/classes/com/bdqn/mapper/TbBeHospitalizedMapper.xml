@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bdqn.mapper.TbBeHospitalizedMapper" >
+  <resultMap id="BaseResultMap" type="com.bdqn.pojo.TbBeHospitalized" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="register_id" property="registerId" jdbcType="INTEGER" />
+    <result column="bedid" property="bedid" jdbcType="INTEGER" />
+    <result column="nurseId" property="nurseid" jdbcType="VARCHAR" />
+    <result column="circumstances" property="circumstances" jdbcType="VARCHAR" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="updated" property="updated" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+      <!-- 查询  -->
+  <select id="finHosList" parameterType="com.bdqn.pojo.TbRegisterSelect" resultType="com.bdqn.pojo.TbRegister">
+  	
+	select *,cash_pledge as ymoeny,
+		(select created from tb_be_hospitalized where `register_id`=tb_register.`id`) as ryDate,
+		(select bedid from tb_be_hospitalized where `register_id`=tb_register.`id`) as bedid,
+		(select`doctorName` from `tb_doctors` where doctorId=tb_register.`doctorId`) as doctorName,
+		(select name from tb_opd where id=tb_register.`opdid`) as opdname  
+		
+	from `tb_register` where  1=1
+	<if test="id != null">
+		and	id like CONCAT('%',#{id},'%') 
+	</if>
+	<if test="doctorname != null and doctorname !=''">
+		 and doctorid in (select doctorId from `tb_doctors` where `doctorName` like  CONCAT('%',#{doctorname},'%'))   
+	</if>
+	<if test="opdName!=null and opdName !=''">
+		 and opdid in (select id from `tb_opd` where `name` like  CONCAT('%',#{opdName},'%')) 
+	</if>
+	
+	<if test="begin != null and end != null">
+		 and id in ( select register_id from tb_be_hospitalized where #{begin}&lt; created &lt; #{end}  )  
+	</if>
+	<if test="begin!=null and end == null">
+		 and id in ( select register_id from tb_be_hospitalized where  #{begin}&lt; created   )  
+	</if>
+	<if test="begin==null and end !=null">
+		and id in ( select register_id from tb_be_hospitalized where  created &lt; #{end} )  
+	</if>
+		and id in ( select register_id from tb_be_hospitalized )  
+		 order by updated desc 
+  </select>
+  
+  <!-- look -->
+  
+   
+  <select id="findCostItem" parameterType="java.lang.Integer" resultType="com.bdqn.pojo.TbCostItem">
+  		select *,(select name from tb_register where id=#{rid} ) as name  ,
+         (select cash_pledge from tb_register where id=#{rid} ) as cash_pledge ,
+         (select HFcost from tb_register where id=#{rid} ) as HFcost 
+		from tb_costs_costsItem inner join tb_cost_Item on tb_cost_Item.`id`=tb_costs_costsItem.`itemid` 
+ 		where `costsid`=#{rid}
+  </select>
+  
+  <!-- 结束 -->
+  
+  
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, register_id, bedid, nurseId, circumstances, created, updated
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bdqn.pojo.TbBeHospitalizedExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_be_hospitalized
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_be_hospitalized
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_be_hospitalized
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bdqn.pojo.TbBeHospitalizedExample" >
+    delete from tb_be_hospitalized
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bdqn.pojo.TbBeHospitalized" >
+    insert into tb_be_hospitalized (id, register_id, bedid, 
+      nurseId, circumstances, created, 
+      updated)
+    values (#{id,jdbcType=INTEGER}, #{registerId,jdbcType=INTEGER}, #{bedid,jdbcType=INTEGER}, 
+      #{nurseid,jdbcType=VARCHAR}, #{circumstances,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, 
+      #{updated,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bdqn.pojo.TbBeHospitalized" >
+    insert into tb_be_hospitalized
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="registerId != null" >
+        register_id,
+      </if>
+      <if test="bedid != null" >
+        bedid,
+      </if>
+      <if test="nurseid != null" >
+        nurseId,
+      </if>
+      <if test="circumstances != null" >
+        circumstances,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="updated != null" >
+        updated,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="registerId != null" >
+        #{registerId,jdbcType=INTEGER},
+      </if>
+      <if test="bedid != null" >
+        #{bedid,jdbcType=INTEGER},
+      </if>
+      <if test="nurseid != null" >
+        #{nurseid,jdbcType=VARCHAR},
+      </if>
+      <if test="circumstances != null" >
+        #{circumstances,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated != null" >
+        #{updated,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bdqn.pojo.TbBeHospitalizedExample" resultType="java.lang.Integer" >
+    select count(*) from tb_be_hospitalized
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_be_hospitalized
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.registerId != null" >
+        register_id = #{record.registerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.bedid != null" >
+        bedid = #{record.bedid,jdbcType=INTEGER},
+      </if>
+      <if test="record.nurseid != null" >
+        nurseId = #{record.nurseid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.circumstances != null" >
+        circumstances = #{record.circumstances,jdbcType=VARCHAR},
+      </if>
+      <if test="record.created != null" >
+        created = #{record.created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updated != null" >
+        updated = #{record.updated,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_be_hospitalized
+    set id = #{record.id,jdbcType=INTEGER},
+      register_id = #{record.registerId,jdbcType=INTEGER},
+      bedid = #{record.bedid,jdbcType=INTEGER},
+      nurseId = #{record.nurseid,jdbcType=VARCHAR},
+      circumstances = #{record.circumstances,jdbcType=VARCHAR},
+      created = #{record.created,jdbcType=TIMESTAMP},
+      updated = #{record.updated,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bdqn.pojo.TbBeHospitalized" >
+    update tb_be_hospitalized
+    <set >
+      <if test="registerId != null" >
+        register_id = #{registerId,jdbcType=INTEGER},
+      </if>
+      <if test="bedid != null" >
+        bedid = #{bedid,jdbcType=INTEGER},
+      </if>
+      <if test="nurseid != null" >
+        nurseId = #{nurseid,jdbcType=VARCHAR},
+      </if>
+      <if test="circumstances != null" >
+        circumstances = #{circumstances,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated != null" >
+        updated = #{updated,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bdqn.pojo.TbBeHospitalized" >
+    update tb_be_hospitalized
+    set register_id = #{registerId,jdbcType=INTEGER},
+      bedid = #{bedid,jdbcType=INTEGER},
+      nurseId = #{nurseid,jdbcType=VARCHAR},
+      circumstances = #{circumstances,jdbcType=VARCHAR},
+      created = #{created,jdbcType=TIMESTAMP},
+      updated = #{updated,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

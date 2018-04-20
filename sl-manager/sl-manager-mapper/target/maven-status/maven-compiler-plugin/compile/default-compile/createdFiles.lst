@@ -1,0 +1,15 @@
+com\bdqn\sl\mapper\SetmealMapper.class
+com\bdqn\sl\mapper\SysUserMapper.class
+com\bdqn\sl\mapper\SysRoleAuthorityMapper.class
+com\bdqn\sl\mapper\OrdersCSMapper.class
+com\bdqn\sl\mapper\SysRoletypeMapper.class
+com\bdqn\sl\mapper\RemitmoenyMapper.class
+com\bdqn\sl\mapper\SmCMapper.class
+com\bdqn\sl\mapper\SysAuthorityMapper.class
+com\bdqn\sl\mapper\OrdersMapper.class
+com\bdqn\sl\mapper\SysRoleMapper.class
+com\bdqn\sl\mapper\CommodityMapper.class
+com\bdqn\sl\mapper\InformationMapper.class
+com\bdqn\sl\mapper\AfficheMapper.class
+com\bdqn\sl\mapper\RechargeMapper.class
+com\bdqn\sl\mapper\SysDictionaryMapper.class

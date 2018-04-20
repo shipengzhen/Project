@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+	<display-name></display-name>
+
+
+
+	<!-- 静态资源防止URL错误,static目录下请求由default处理 -->
+	<servlet-mapping>
+		<servlet-name>default</servlet-name>
+		
+		<!-- sb框架 -->
+		<url-pattern>/jsp/assets/*</url-pattern>
+		<url-pattern>/jsp/css/*</url-pattern>
+		<url-pattern>/jsp/front/*</url-pattern>
+		<url-pattern>/jsp/images/*</url-pattern>
+		<url-pattern>/jsp/js/*</url-pattern>
+		<url-pattern>/jsp/kj/*</url-pattern>
+		
+		<url-pattern>/static/*</url-pattern>
+	</servlet-mapping>
+	
+	<!-- Spring字符集过滤 -->  
+    <filter>  
+        <description>字符集过滤器</description>  
+        <filter-name>encodingFilter</filter-name>  
+        <filter-class>  
+          org.springframework.web.filter.CharacterEncodingFilter  
+        </filter-class>  
+        <init-param>  
+            <description>字符集编码</description>  
+            <param-name>encoding</param-name>  
+            <param-value>UTF-8</param-value>  
+        </init-param>  
+    </filter>
+    <filter-mapping>  
+        <filter-name>encodingFilter</filter-name>  
+        <url-pattern>/*</url-pattern>  
+    </filter-mapping>
+	
+	<!-- 配置Spring MVC的核心控制器DispatcherServlet -->
+	<servlet>
+		<servlet-name>springmvc</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<!--初始化参数-->
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:spring-mvc.xml</param-value>
+		</init-param>
+		<!--优先级为1，标记容器在启动时就加载DispatcherServlet-->
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>springmvc</servlet-name>
+		<!--/代表截获所有地址请求-->
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+
+
+	<!-- 全局错误页 -->
+	<error-page>
+		<error-code>403</error-code>
+		<location>/jsp/error/403.jsp</location>
+	</error-page>
+
+	
+
+
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+</web-app>

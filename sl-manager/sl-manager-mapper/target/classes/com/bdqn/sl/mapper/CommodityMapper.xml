@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bdqn.sl.mapper.CommodityMapper" >
+  <resultMap id="BaseResultMap" type="com.bdqn.sl.pojo.Commodity" >
+    <id column="commodityId" property="commodityid" jdbcType="INTEGER" />
+    <result column="commodityName" property="commodityname" jdbcType="VARCHAR" />
+    <result column="yPrice" property="yprice" jdbcType="REAL" />
+    <result column="xPrice" property="xprice" jdbcType="REAL" />
+    <result column="number" property="number" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="specifications" property="specifications" jdbcType="VARCHAR" />
+    <result column="details" property="details" jdbcType="VARCHAR" />
+    <result column="createUid" property="createuid" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="updateUid" property="updateuid" jdbcType="INTEGER" />
+    <result column="updated" property="updated" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    commodityId, commodityName, yPrice, xPrice, number, status, specifications, details, 
+    createUid, created, updateUid, updated
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bdqn.sl.pojo.CommodityExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from commodity
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from commodity
+    where commodityId = #{commodityid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from commodity
+    where commodityId = #{commodityid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bdqn.sl.pojo.CommodityExample" >
+    delete from commodity
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bdqn.sl.pojo.Commodity" >
+    insert into commodity (commodityId, commodityName, yPrice, 
+      xPrice, number, status, 
+      specifications, details, createUid, 
+      created, updateUid, updated
+      )
+    values (#{commodityid,jdbcType=INTEGER}, #{commodityname,jdbcType=VARCHAR}, #{yprice,jdbcType=REAL}, 
+      #{xprice,jdbcType=REAL}, #{number,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{specifications,jdbcType=VARCHAR}, #{details,jdbcType=VARCHAR}, #{createuid,jdbcType=INTEGER}, 
+      #{created,jdbcType=TIMESTAMP}, #{updateuid,jdbcType=INTEGER}, #{updated,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bdqn.sl.pojo.Commodity" >
+    insert into commodity
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="commodityid != null" >
+        commodityId,
+      </if>
+      <if test="commodityname != null" >
+        commodityName,
+      </if>
+      <if test="yprice != null" >
+        yPrice,
+      </if>
+      <if test="xprice != null" >
+        xPrice,
+      </if>
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="specifications != null" >
+        specifications,
+      </if>
+      <if test="details != null" >
+        details,
+      </if>
+      <if test="createuid != null" >
+        createUid,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="updateuid != null" >
+        updateUid,
+      </if>
+      <if test="updated != null" >
+        updated,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="commodityid != null" >
+        #{commodityid,jdbcType=INTEGER},
+      </if>
+      <if test="commodityname != null" >
+        #{commodityname,jdbcType=VARCHAR},
+      </if>
+      <if test="yprice != null" >
+        #{yprice,jdbcType=REAL},
+      </if>
+      <if test="xprice != null" >
+        #{xprice,jdbcType=REAL},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="specifications != null" >
+        #{specifications,jdbcType=VARCHAR},
+      </if>
+      <if test="details != null" >
+        #{details,jdbcType=VARCHAR},
+      </if>
+      <if test="createuid != null" >
+        #{createuid,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateuid != null" >
+        #{updateuid,jdbcType=INTEGER},
+      </if>
+      <if test="updated != null" >
+        #{updated,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bdqn.sl.pojo.CommodityExample" resultType="java.lang.Integer" >
+    select count(*) from commodity
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update commodity
+    <set >
+      <if test="record.commodityid != null" >
+        commodityId = #{record.commodityid,jdbcType=INTEGER},
+      </if>
+      <if test="record.commodityname != null" >
+        commodityName = #{record.commodityname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yprice != null" >
+        yPrice = #{record.yprice,jdbcType=REAL},
+      </if>
+      <if test="record.xprice != null" >
+        xPrice = #{record.xprice,jdbcType=REAL},
+      </if>
+      <if test="record.number != null" >
+        number = #{record.number,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.specifications != null" >
+        specifications = #{record.specifications,jdbcType=VARCHAR},
+      </if>
+      <if test="record.details != null" >
+        details = #{record.details,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createuid != null" >
+        createUid = #{record.createuid,jdbcType=INTEGER},
+      </if>
+      <if test="record.created != null" >
+        created = #{record.created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateuid != null" >
+        updateUid = #{record.updateuid,jdbcType=INTEGER},
+      </if>
+      <if test="record.updated != null" >
+        updated = #{record.updated,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update commodity
+    set commodityId = #{record.commodityid,jdbcType=INTEGER},
+      commodityName = #{record.commodityname,jdbcType=VARCHAR},
+      yPrice = #{record.yprice,jdbcType=REAL},
+      xPrice = #{record.xprice,jdbcType=REAL},
+      number = #{record.number,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      specifications = #{record.specifications,jdbcType=VARCHAR},
+      details = #{record.details,jdbcType=VARCHAR},
+      createUid = #{record.createuid,jdbcType=INTEGER},
+      created = #{record.created,jdbcType=TIMESTAMP},
+      updateUid = #{record.updateuid,jdbcType=INTEGER},
+      updated = #{record.updated,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bdqn.sl.pojo.Commodity" >
+    update commodity
+    <set >
+      <if test="commodityname != null" >
+        commodityName = #{commodityname,jdbcType=VARCHAR},
+      </if>
+      <if test="yprice != null" >
+        yPrice = #{yprice,jdbcType=REAL},
+      </if>
+      <if test="xprice != null" >
+        xPrice = #{xprice,jdbcType=REAL},
+      </if>
+      <if test="number != null" >
+        number = #{number,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="specifications != null" >
+        specifications = #{specifications,jdbcType=VARCHAR},
+      </if>
+      <if test="details != null" >
+        details = #{details,jdbcType=VARCHAR},
+      </if>
+      <if test="createuid != null" >
+        createUid = #{createuid,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateuid != null" >
+        updateUid = #{updateuid,jdbcType=INTEGER},
+      </if>
+      <if test="updated != null" >
+        updated = #{updated,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where commodityId = #{commodityid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bdqn.sl.pojo.Commodity" >
+    update commodity
+    set commodityName = #{commodityname,jdbcType=VARCHAR},
+      yPrice = #{yprice,jdbcType=REAL},
+      xPrice = #{xprice,jdbcType=REAL},
+      number = #{number,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      specifications = #{specifications,jdbcType=VARCHAR},
+      details = #{details,jdbcType=VARCHAR},
+      createUid = #{createuid,jdbcType=INTEGER},
+      created = #{created,jdbcType=TIMESTAMP},
+      updateUid = #{updateuid,jdbcType=INTEGER},
+      updated = #{updated,jdbcType=TIMESTAMP}
+    where commodityId = #{commodityid,jdbcType=INTEGER}
+  </update>
+</mapper>

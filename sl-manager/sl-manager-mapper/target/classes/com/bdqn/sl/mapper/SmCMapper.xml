@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bdqn.sl.mapper.SmCMapper" >
+  <resultMap id="BaseResultMap" type="com.bdqn.sl.pojo.SmC" >
+    <id column="smc_sid" property="smcSid" jdbcType="INTEGER" />
+    <id column="smc_cid" property="smcCid" jdbcType="INTEGER" />
+    <result column="smc_cnum" property="smcCnum" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    smc_sid, smc_cid, smc_cnum
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bdqn.sl.pojo.SmCExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sm_c
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.bdqn.sl.pojo.SmCKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from sm_c
+    where smc_sid = #{smcSid,jdbcType=INTEGER}
+      and smc_cid = #{smcCid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.bdqn.sl.pojo.SmCKey" >
+    delete from sm_c
+    where smc_sid = #{smcSid,jdbcType=INTEGER}
+      and smc_cid = #{smcCid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bdqn.sl.pojo.SmCExample" >
+    delete from sm_c
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bdqn.sl.pojo.SmC" >
+    insert into sm_c (smc_sid, smc_cid, smc_cnum
+      )
+    values (#{smcSid,jdbcType=INTEGER}, #{smcCid,jdbcType=INTEGER}, #{smcCnum,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bdqn.sl.pojo.SmC" >
+    insert into sm_c
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="smcSid != null" >
+        smc_sid,
+      </if>
+      <if test="smcCid != null" >
+        smc_cid,
+      </if>
+      <if test="smcCnum != null" >
+        smc_cnum,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="smcSid != null" >
+        #{smcSid,jdbcType=INTEGER},
+      </if>
+      <if test="smcCid != null" >
+        #{smcCid,jdbcType=INTEGER},
+      </if>
+      <if test="smcCnum != null" >
+        #{smcCnum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bdqn.sl.pojo.SmCExample" resultType="java.lang.Integer" >
+    select count(*) from sm_c
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sm_c
+    <set >
+      <if test="record.smcSid != null" >
+        smc_sid = #{record.smcSid,jdbcType=INTEGER},
+      </if>
+      <if test="record.smcCid != null" >
+        smc_cid = #{record.smcCid,jdbcType=INTEGER},
+      </if>
+      <if test="record.smcCnum != null" >
+        smc_cnum = #{record.smcCnum,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sm_c
+    set smc_sid = #{record.smcSid,jdbcType=INTEGER},
+      smc_cid = #{record.smcCid,jdbcType=INTEGER},
+      smc_cnum = #{record.smcCnum,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bdqn.sl.pojo.SmC" >
+    update sm_c
+    <set >
+      <if test="smcCnum != null" >
+        smc_cnum = #{smcCnum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where smc_sid = #{smcSid,jdbcType=INTEGER}
+      and smc_cid = #{smcCid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bdqn.sl.pojo.SmC" >
+    update sm_c
+    set smc_cnum = #{smcCnum,jdbcType=INTEGER}
+    where smc_sid = #{smcSid,jdbcType=INTEGER}
+      and smc_cid = #{smcCid,jdbcType=INTEGER}
+  </update>
+</mapper>

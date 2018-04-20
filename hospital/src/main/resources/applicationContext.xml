@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+	<!-- 读取数据库配置文件 -->
+	<context:property-placeholder location="classpath:database.properties" />
+	<!-- 定义dbcp数据源 -->
+	<!-- JNDI获取数据源(使用dbcp连接池) -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close" scope="singleton">
+		<property name="driverClassName" value="${driver}" />
+		<property name="url" value="${url}" />
+		<property name="username" value="${user}" />
+		<property name="password" value="${password}" />
+		<property name="initialSize" value="${initialSize}" />
+		<property name="maxActive" value="${maxActive}" />
+		<property name="maxIdle" value="${maxIdle}" />
+		<property name="minIdle" value="${minIdle}" />
+		<property name="maxWait" value="${maxWait}" />
+		<property name="removeAbandonedTimeout" value="${removeAbandonedTimeout}" />
+		<property name="removeAbandoned" value="${removeAbandoned}" />
+		<!-- sql 心跳 -->
+		<property name="testWhileIdle" value="${testWhileIdle}" />
+		<property name="testOnBorrow" value="${testOnBorrow}" />
+		<property name="testOnReturn" value="${testOnReturn}" />
+		<property name="timeBetweenEvictionRunsMillis" value="${timeBetweenEvictionRunsMillis}" />
+		<property name="numTestsPerEvictionRun" value="${numTestsPerEvictionRun}" />
+	</bean>
+	<!-- 定义SessionFactory Bean -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<!-- 为LocalSessionFactoryBean(AnnotationSessionFactoryBean)注入定义好的数据源 -->
+		<property name="dataSource" ref="dataSource"></property>
+		<!-- 添加Hibernate配置参数 -->
+		<property name="hibernateProperties">
+			<props>
+				<!--使用的数据库类型 -->
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<!--是否将运行期生成的SQL输出到日志以供调试 -->
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<!--是否格式化SQL -->
+				<prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
+				<!-- 程序运行时自动生成表，生成表之后，程序不需要此行代码了，注掉 -->
+				<!-- <prop key="hibernate.hbm2ddl.auto">update</prop> -->
+				<prop key="hibernate.hbm2ddl.auto">none</prop>
+				<!-- <prop key="hibernate.temp.use_jdbc_metadata_defaults">false</prop> -->
+				<!--当前session由谁来管理 默认由spring管理 ,使用spring管理必须有声明式事务 -->
+				<!-- <prop key="hibernate.current_session_context_class">${hibernate.current_session_context_class}</prop> -->
+				<!-- <prop key="hibernate.current_session_context_class">thread</prop> -->
+				<!-- <prop key="hibernate.current_session_context_class">org.springframework.orm.hibernate5.SpringSessionContext</prop> -->
+			</props>
+		</property>
+		<!-- 添加对象关系映射文件 -->
+		<property name="mappingDirectoryLocations" value="${mappingDirectoryLocations}"></property>
+	</bean>
+
+	<!-- 定义事务管理器 -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<!-- 定义事务属性,声明事务规则 -->
+		<tx:attributes>
+			<tx:method name="find*" read-only="true"/>
+			<tx:method name="search*" read-only="true" />
+			<tx:method name="query*" read-only="true" />
+			<tx:method name="add*" propagation="REQUIRED" />
+			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="register" propagation="REQUIRED" />
+			<tx:method name="del*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="modify*" propagation="REQUIRED" />
+			<tx:method name="do*" propagation="REQUIRED" />
+			<tx:method name="*" propagation="REQUIRED" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+
+	<!-- proxy-target-class属性值决定是基于接口的还是基于类的代理被创建。 如果proxy-target-class 属性值被设置为true，那么基于类的代理将起作用（这时需要cglib库,即实现类类型）。 
+		如果proxy-target-class属值被设置为false或者这个属性被省略，那么标准的JDK 基于接口的代理将 -->
+	<aop:config proxy-target-class="true">
+		<!-- 定义切入点 -->
+		<aop:pointcut id="pointcut" expression="execution(* com.spz.hospital.service..*.*(..))" 
+			/>
+		<!-- <aop:pointcut id="pointcut" expression="execution(* com..*.*(..))" /> -->
+		<!-- 将事务通知与切入点组合 -->
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut" />
+	</aop:config>
+	
+	<bean id="useeDao" class="com.spz.hospital.dao.impl.UseeDaoImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<bean id="useeService" class="com.spz.hospital.service.impl.UseeServiceImpl">
+		<property name="useeDao" ref="useeDao"></property>
+	</bean>
+</beans>

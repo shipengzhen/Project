@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bdqn.sl.mapper.InformationMapper" >
+  <resultMap id="BaseResultMap" type="com.bdqn.sl.pojo.Information" >
+    <id column="zId" property="zid" jdbcType="INTEGER" />
+    <result column="zTitle" property="ztitle" jdbcType="VARCHAR" />
+    <result column="zTypeid" property="ztypeid" jdbcType="INTEGER" />
+    <result column="zFilesize" property="zfilesize" jdbcType="VARCHAR" />
+    <result column="fileName" property="filename" jdbcType="VARCHAR" />
+    <result column="zFile" property="zfile" jdbcType="VARCHAR" />
+    <result column="zDoc" property="zdoc" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="createUid" property="createuid" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="updateUid" property="updateuid" jdbcType="INTEGER" />
+    <result column="updated" property="updated" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    zId, zTitle, zTypeid, zFilesize, fileName, zFile, zDoc, status, createUid, created, 
+    updateUid, updated
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bdqn.sl.pojo.InformationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from information
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from information
+    where zId = #{zid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from information
+    where zId = #{zid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bdqn.sl.pojo.InformationExample" >
+    delete from information
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bdqn.sl.pojo.Information" >
+    insert into information (zId, zTitle, zTypeid, 
+      zFilesize, fileName, zFile, 
+      zDoc, status, createUid, 
+      created, updateUid, updated
+      )
+    values (#{zid,jdbcType=INTEGER}, #{ztitle,jdbcType=VARCHAR}, #{ztypeid,jdbcType=INTEGER}, 
+      #{zfilesize,jdbcType=VARCHAR}, #{filename,jdbcType=VARCHAR}, #{zfile,jdbcType=VARCHAR}, 
+      #{zdoc,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{createuid,jdbcType=INTEGER}, 
+      #{created,jdbcType=TIMESTAMP}, #{updateuid,jdbcType=INTEGER}, #{updated,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.bdqn.sl.pojo.Information" >
+    insert into information
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="zid != null" >
+        zId,
+      </if>
+      <if test="ztitle != null" >
+        zTitle,
+      </if>
+      <if test="ztypeid != null" >
+        zTypeid,
+      </if>
+      <if test="zfilesize != null" >
+        zFilesize,
+      </if>
+      <if test="filename != null" >
+        fileName,
+      </if>
+      <if test="zfile != null" >
+        zFile,
+      </if>
+      <if test="zdoc != null" >
+        zDoc,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createuid != null" >
+        createUid,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="updateuid != null" >
+        updateUid,
+      </if>
+      <if test="updated != null" >
+        updated,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="zid != null" >
+        #{zid,jdbcType=INTEGER},
+      </if>
+      <if test="ztitle != null" >
+        #{ztitle,jdbcType=VARCHAR},
+      </if>
+      <if test="ztypeid != null" >
+        #{ztypeid,jdbcType=INTEGER},
+      </if>
+      <if test="zfilesize != null" >
+        #{zfilesize,jdbcType=VARCHAR},
+      </if>
+      <if test="filename != null" >
+        #{filename,jdbcType=VARCHAR},
+      </if>
+      <if test="zfile != null" >
+        #{zfile,jdbcType=VARCHAR},
+      </if>
+      <if test="zdoc != null" >
+        #{zdoc,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createuid != null" >
+        #{createuid,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateuid != null" >
+        #{updateuid,jdbcType=INTEGER},
+      </if>
+      <if test="updated != null" >
+        #{updated,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bdqn.sl.pojo.InformationExample" resultType="java.lang.Integer" >
+    select count(*) from information
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update information
+    <set >
+      <if test="record.zid != null" >
+        zId = #{record.zid,jdbcType=INTEGER},
+      </if>
+      <if test="record.ztitle != null" >
+        zTitle = #{record.ztitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ztypeid != null" >
+        zTypeid = #{record.ztypeid,jdbcType=INTEGER},
+      </if>
+      <if test="record.zfilesize != null" >
+        zFilesize = #{record.zfilesize,jdbcType=VARCHAR},
+      </if>
+      <if test="record.filename != null" >
+        fileName = #{record.filename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zfile != null" >
+        zFile = #{record.zfile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zdoc != null" >
+        zDoc = #{record.zdoc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.createuid != null" >
+        createUid = #{record.createuid,jdbcType=INTEGER},
+      </if>
+      <if test="record.created != null" >
+        created = #{record.created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateuid != null" >
+        updateUid = #{record.updateuid,jdbcType=INTEGER},
+      </if>
+      <if test="record.updated != null" >
+        updated = #{record.updated,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update information
+    set zId = #{record.zid,jdbcType=INTEGER},
+      zTitle = #{record.ztitle,jdbcType=VARCHAR},
+      zTypeid = #{record.ztypeid,jdbcType=INTEGER},
+      zFilesize = #{record.zfilesize,jdbcType=VARCHAR},
+      fileName = #{record.filename,jdbcType=VARCHAR},
+      zFile = #{record.zfile,jdbcType=VARCHAR},
+      zDoc = #{record.zdoc,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      createUid = #{record.createuid,jdbcType=INTEGER},
+      created = #{record.created,jdbcType=TIMESTAMP},
+      updateUid = #{record.updateuid,jdbcType=INTEGER},
+      updated = #{record.updated,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bdqn.sl.pojo.Information" >
+    update information
+    <set >
+      <if test="ztitle != null" >
+        zTitle = #{ztitle,jdbcType=VARCHAR},
+      </if>
+      <if test="ztypeid != null" >
+        zTypeid = #{ztypeid,jdbcType=INTEGER},
+      </if>
+      <if test="zfilesize != null" >
+        zFilesize = #{zfilesize,jdbcType=VARCHAR},
+      </if>
+      <if test="filename != null" >
+        fileName = #{filename,jdbcType=VARCHAR},
+      </if>
+      <if test="zfile != null" >
+        zFile = #{zfile,jdbcType=VARCHAR},
+      </if>
+      <if test="zdoc != null" >
+        zDoc = #{zdoc,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createuid != null" >
+        createUid = #{createuid,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateuid != null" >
+        updateUid = #{updateuid,jdbcType=INTEGER},
+      </if>
+      <if test="updated != null" >
+        updated = #{updated,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where zId = #{zid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bdqn.sl.pojo.Information" >
+    update information
+    set zTitle = #{ztitle,jdbcType=VARCHAR},
+      zTypeid = #{ztypeid,jdbcType=INTEGER},
+      zFilesize = #{zfilesize,jdbcType=VARCHAR},
+      fileName = #{filename,jdbcType=VARCHAR},
+      zFile = #{zfile,jdbcType=VARCHAR},
+      zDoc = #{zdoc,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      createUid = #{createuid,jdbcType=INTEGER},
+      created = #{created,jdbcType=TIMESTAMP},
+      updateUid = #{updateuid,jdbcType=INTEGER},
+      updated = #{updated,jdbcType=TIMESTAMP}
+    where zId = #{zid,jdbcType=INTEGER}
+  </update>
+</mapper>

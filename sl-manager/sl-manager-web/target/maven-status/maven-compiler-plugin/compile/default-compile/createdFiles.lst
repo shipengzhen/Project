@@ -1,0 +1,14 @@
+com\bdqn\sl\controller\CommodityController.class
+com\bdqn\sl\interceptor\SimpleHandlerInterceptor.class
+com\bdqn\sl\controller\RoleController.class
+com\bdqn\sl\controller\SysUserHYController.class
+com\bdqn\sl\controller\AfficheController.class
+com\bdqn\sl\controller\LoginController.class
+com\bdqn\sl\controller\OrdersController.class
+com\bdqn\sl\controller\userInfoController.class
+com\bdqn\sl\controller\RechargeController.class
+com\bdqn\sl\controller\SysUserController.class
+com\bdqn\sl\controller\InformationController.class
+com\bdqn\sl\controller\AuthorityController.class
+com\bdqn\sl\controller\DictionaryController.class
+com\bdqn\sl\controller\SetMealController.class

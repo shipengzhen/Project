@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bdqn.mapper.TbMedicineMapper" >
+  <resultMap id="BaseResultMap" type="com.bdqn.pojo.TbMedicine" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="img" property="img" jdbcType="VARCHAR" />
+    <result column="jprice" property="jprice" jdbcType="DECIMAL" />
+    <result column="sprice" property="sprice" jdbcType="DECIMAL" />
+    <result column="medicineNmae" property="medicinenmae" jdbcType="VARCHAR" />
+    <result column="medicineType" property="medicinetype" jdbcType="VARCHAR" />
+    <result column="describe" property="describe" jdbcType="VARCHAR" />
+    <result column="QGP" property="qgp" jdbcType="VARCHAR" />
+    <result column="doc" property="doc" jdbcType="VARCHAR" />
+    <result column="factory" property="factory" jdbcType="VARCHAR" />
+    <result column="eatdoc" property="eatdoc" jdbcType="VARCHAR" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="stock" property="stock" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="created" property="created" jdbcType="TIMESTAMP" />
+    <result column="updated" property="updated" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, img, jprice, sprice, medicineNmae, medicineType, `describe`, QGP, doc, factory, 
+    eatdoc, remarks, stock, status, created, updated
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.bdqn.pojo.TbMedicineExample" >
+    select
+    <if test="distinct" >
+      `distinct`
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_medicine
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_medicine
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from tb_medicine
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.bdqn.pojo.TbMedicineExample" >
+    delete from tb_medicine
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.bdqn.pojo.TbMedicine" >
+    insert into tb_medicine (id, img, jprice, 
+      sprice, medicineNmae, medicineType, 
+      `describe`, QGP, doc, 
+      factory, eatdoc, remarks, 
+      stock, `status`, created, 
+      updated)
+    values (#{id,jdbcType=VARCHAR}, #{img,jdbcType=VARCHAR}, #{jprice,jdbcType=DECIMAL}, 
+      #{sprice,jdbcType=DECIMAL}, #{medicinenmae,jdbcType=VARCHAR}, #{medicinetype,jdbcType=VARCHAR}, 
+      #{describe,jdbcType=VARCHAR}, #{qgp,jdbcType=VARCHAR}, #{doc,jdbcType=VARCHAR}, 
+      #{factory,jdbcType=VARCHAR}, #{eatdoc,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR}, 
+      #{stock,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{created,jdbcType=TIMESTAMP}, 
+      #{updated,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.bdqn.pojo.TbMedicine" >
+    insert into tb_medicine
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="img != null" >
+        img,
+      </if>
+      <if test="jprice != null" >
+        jprice,
+      </if>
+      <if test="sprice != null" >
+        sprice,
+      </if>
+      <if test="medicinenmae != null" >
+        medicineNmae,
+      </if>
+      <if test="medicinetype != null" >
+        medicineType,
+      </if>
+      <if test="describe != null" >
+        `describe`,
+      </if>
+      <if test="qgp != null" >
+        QGP,
+      </if>
+      <if test="doc != null" >
+        doc,
+      </if>
+      <if test="factory != null" >
+        factory,
+      </if>
+      <if test="eatdoc != null" >
+        eatdoc,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="stock != null" >
+        stock,
+      </if>
+      <if test="status != null" >
+        `status`,
+      </if>
+      <if test="created != null" >
+        created,
+      </if>
+      <if test="updated != null" >
+        updated,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="img != null" >
+        #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="jprice != null" >
+        #{jprice,jdbcType=DECIMAL},
+      </if>
+      <if test="sprice != null" >
+        #{sprice,jdbcType=DECIMAL},
+      </if>
+      <if test="medicinenmae != null" >
+        #{medicinenmae,jdbcType=VARCHAR},
+      </if>
+      <if test="medicinetype != null" >
+        #{medicinetype,jdbcType=VARCHAR},
+      </if>
+      <if test="describe != null" >
+        #{describe,jdbcType=VARCHAR},
+      </if>
+      <if test="qgp != null" >
+        #{qgp,jdbcType=VARCHAR},
+      </if>
+      <if test="doc != null" >
+        #{doc,jdbcType=VARCHAR},
+      </if>
+      <if test="factory != null" >
+        #{factory,jdbcType=VARCHAR},
+      </if>
+      <if test="eatdoc != null" >
+        #{eatdoc,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="stock != null" >
+        #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated != null" >
+        #{updated,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.bdqn.pojo.TbMedicineExample" resultType="java.lang.Integer" >
+    select count(*) from tb_medicine
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_medicine
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.img != null" >
+        img = #{record.img,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jprice != null" >
+        jprice = #{record.jprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.sprice != null" >
+        sprice = #{record.sprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.medicinenmae != null" >
+        medicineNmae = #{record.medicinenmae,jdbcType=VARCHAR},
+      </if>
+      <if test="record.medicinetype != null" >
+        medicineType = #{record.medicinetype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.describe != null" >
+        describe = #{record.describe,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qgp != null" >
+        QGP = #{record.qgp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doc != null" >
+        doc = #{record.doc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.factory != null" >
+        factory = #{record.factory,jdbcType=VARCHAR},
+      </if>
+      <if test="record.eatdoc != null" >
+        eatdoc = #{record.eatdoc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remarks != null" >
+        remarks = #{record.remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stock != null" >
+        stock = #{record.stock,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.created != null" >
+        created = #{record.created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updated != null" >
+        updated = #{record.updated,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_medicine
+    set id = #{record.id,jdbcType=VARCHAR},
+      img = #{record.img,jdbcType=VARCHAR},
+      jprice = #{record.jprice,jdbcType=DECIMAL},
+      sprice = #{record.sprice,jdbcType=DECIMAL},
+      medicineNmae = #{record.medicinenmae,jdbcType=VARCHAR},
+      medicineType = #{record.medicinetype,jdbcType=VARCHAR},
+      describe = #{record.describe,jdbcType=VARCHAR},
+      QGP = #{record.qgp,jdbcType=VARCHAR},
+      doc = #{record.doc,jdbcType=VARCHAR},
+      factory = #{record.factory,jdbcType=VARCHAR},
+      eatdoc = #{record.eatdoc,jdbcType=VARCHAR},
+      remarks = #{record.remarks,jdbcType=VARCHAR},
+      stock = #{record.stock,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      created = #{record.created,jdbcType=TIMESTAMP},
+      updated = #{record.updated,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.bdqn.pojo.TbMedicine" >
+    update tb_medicine
+    <set >
+      <if test="img != null" >
+        img = #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="jprice != null" >
+        jprice = #{jprice,jdbcType=DECIMAL},
+      </if>
+      <if test="sprice != null" >
+        sprice = #{sprice,jdbcType=DECIMAL},
+      </if>
+      <if test="medicinenmae != null" >
+        medicineNmae = #{medicinenmae,jdbcType=VARCHAR},
+      </if>
+      <if test="medicinetype != null" >
+        medicineType = #{medicinetype,jdbcType=VARCHAR},
+      </if>
+      <if test="describe != null" >
+        `describe` = #{describe,jdbcType=VARCHAR},
+      </if>
+      <if test="qgp != null" >
+        QGP = #{qgp,jdbcType=VARCHAR},
+      </if>
+      <if test="doc != null" >
+        doc = #{doc,jdbcType=VARCHAR},
+      </if>
+      <if test="factory != null" >
+        factory = #{factory,jdbcType=VARCHAR},
+      </if>
+      <if test="eatdoc != null" >
+        eatdoc = #{eatdoc,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="stock != null" >
+        stock = #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="created != null" >
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated != null" >
+        updated = #{updated,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.bdqn.pojo.TbMedicine" >
+    update tb_medicine
+    set img = #{img,jdbcType=VARCHAR},
+      jprice = #{jprice,jdbcType=DECIMAL},
+      sprice = #{sprice,jdbcType=DECIMAL},
+      medicineNmae = #{medicinenmae,jdbcType=VARCHAR},
+      medicineType = #{medicinetype,jdbcType=VARCHAR},
+      describe = #{describe,jdbcType=VARCHAR},
+      QGP = #{qgp,jdbcType=VARCHAR},
+      doc = #{doc,jdbcType=VARCHAR},
+      factory = #{factory,jdbcType=VARCHAR},
+      eatdoc = #{eatdoc,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      stock = #{stock,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      created = #{created,jdbcType=TIMESTAMP},
+      updated = #{updated,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
