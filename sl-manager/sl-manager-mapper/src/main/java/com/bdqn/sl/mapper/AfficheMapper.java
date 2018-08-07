@@ -4,10 +4,12 @@ import com.bdqn.sl.pojo.Affiche;
 import com.bdqn.sl.pojo.AfficheExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface AfficheMapper {
     int countByExample(AfficheExample example);
-
+    
     int deleteByExample(AfficheExample example);
 
     int deleteByPrimaryKey(Integer gid);
