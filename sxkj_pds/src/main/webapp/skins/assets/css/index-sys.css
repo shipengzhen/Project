@@ -1,0 +1,59 @@
+
+.title-info{
+    width: 100%;
+    height: 140px;
+    background: #fff;
+    margin-bottom: 15px;
+    padding:20px;
+    font-size: 16px;
+    position: relative;
+
+}
+.title-left{
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    padding:14px 25px;
+    color: #fff;
+    background: #0c8ce6;
+    font-size: 24px;
+    border-radius: 6px;
+}
+.title-left a{
+    color: #fff;
+}
+.title-right{
+    padding-right: 10px;
+    position: absolute;
+    width: auto;
+    margin-left: 120px;
+    overflow: hidden;
+}
+
+.map-title .map-box {
+    height: 563px;
+}
+
+.map-title .map-box>.map-right {
+    height: 350px;
+}
+
+.map-title .map-echarts {
+    height: 510px;
+}
+
+.map-title .map-info {
+    margin-top: 10px;
+    padding: 10px 15px;
+}
+@media screen and (max-width: 1440px){
+    .map-title .map-box{
+        height: 474px;
+    }
+    .map-title .map-echarts {
+        height: 100%;
+    }
+    .map-title .map-box>.map-right {
+        height: 283px;
+    }
+}

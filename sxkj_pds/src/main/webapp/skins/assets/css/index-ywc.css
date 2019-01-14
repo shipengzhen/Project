@@ -1,0 +1,18 @@
+.map-title .map-box>.map-right {
+    height: 520px;
+}
+
+.map-title .map-echarts {
+    height: 100%;
+
+}
+
+.map-title .map-info {
+    margin-top: 10px;
+    padding: 10px 15px;
+}
+@media screen and (max-width: 1440px){
+    .map-title .map-box>.map-right {
+        height: 433px;
+    }
+}

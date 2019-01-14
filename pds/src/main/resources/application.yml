@@ -1,0 +1,22 @@
+server:
+ port: 9090
+ 
+logging:
+  level:
+     com.inspur.tech.pds.dao: debug
+     org.springframework.web: error
+ 
+ 
+spring:
+  profiles:
+    active: dev
+  datasource:
+    url: jdbc:oracle:thin:@127.0.0.1:1521:ORCL
+    username: PDS
+    password: PDS
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    type: com.alibaba.druid.pool.DruidDataSource
+
+mybatis:
+ typeAliasesPackage: com.inspur.tech.pds.data
+ mapperLocations: classpath:com/inspur/tech/pds/dao/*Mapper.xml

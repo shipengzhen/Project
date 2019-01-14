@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.inspur.tech.pds.dao.IPdsScientificResearchDao">
+    <resultMap type="com.inspur.tech.pds.data.ScientificResearchDto" id="ScientificResearchDto">
+        <id column="id" property="id" jdbcType="VARCHAR" javaType="String"/>
+        <result column="scientific_id" property="scientificId" jdbcType="VARCHAR" javaType="String"/>
+        <result column="laboratory_name" property="laboratoryName" jdbcType="VARCHAR" javaType="String"/>
+        <result column="instrument_name" property="instrumentName" jdbcType="VARCHAR" javaType="String"/>
+        <result column="serial_number" property="serialNumber" jdbcType="VARCHAR" javaType="String"/>
+        <result column="specification_type" property="specificationType" jdbcType="VARCHAR" javaType="String"/>
+        <result column="instrument_value" property="instrumentValue" jdbcType="NUMERIC"
+                javaType="java.math.BigDecimal"/>
+        <result column="service_field" property="serviceField" jdbcType="VARCHAR" javaType="String"/>
+        <result column="purchase_time" property="purchaseTime" jdbcType="DATE" javaType="java.util.Date"/>
+        <result column="area" property="area" jdbcType="NUMERIC"
+                javaType="java.math.BigDecimal"/>
+        <result column="funding" property="funding" jdbcType="NUMERIC"
+                javaType="java.math.BigDecimal"/>
+        <result column="self_financing" property="selfFinancing" jdbcType="NUMERIC"
+                javaType="java.math.BigDecimal"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" javaType="java.sql.Timestamp"/>
+        <result column="remark" property="remark" jdbcType="VARCHAR" javaType="String"/>
+    </resultMap>
+    <!-- 查询列表 数据库已经加了评审次数和雀神次数不用关联第3个表了 -->
+    <select id="listScientificResearch" parameterType="map" resultMap="ScientificResearchDto">
+        SELECT
+        id,
+        scientific_id,
+        laboratory_name,
+        instrument_name,
+        serial_number,
+        specification_type,
+        instrument_value,
+        service_field,
+        purchase_time,
+        area,
+        funding,
+        self_financing,
+        update_time,
+        remark
+        FROM pds_scientific_research
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="scientificId != null and scientificId!=''">
+                and scientific_id = #{scientificId}
+            </if>
+            <if test="laboratoryName != null and laboratoryName!=''">
+                and laboratory_name like CONCAT(CONCAT('%',#{laboratoryName},'%'))
+            </if>
+            <if test="instrumentName != null and instrumentName!=''">
+                and instrument_name like CONCAT(CONCAT('%',#{instrumentName},'%'))
+            </if>
+            <if test="serialNumber != null and serialNumber!=''">
+                and serial_number = #{serialNumber}
+            </if>
+            <if test="specificationType != null and specificationType!=''">
+                and specification_type = #{specificationType}
+            </if>
+            <if test="serviceField != null and serviceField!=''">
+                and service_field = #{serviceField}
+            </if>
+        </trim>
+    </select>
+    <select id="selectScientificResearchById" parameterType="string" resultMap="ScientificResearchDto">
+        SELECT
+            id,
+            scientific_id,
+            laboratory_name,
+            instrument_name,
+            serial_number,
+            specification_type,
+            instrument_value,
+            service_field,
+            purchase_time,
+            area,
+            funding,
+            self_financing,
+            update_time,
+            remark
+        FROM pds_scientific_research
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <select id="selectLaboratoryArea" parameterType="string" resultMap="ScientificResearchDto">
+        SELECT
+            lb.id AS scientific_id,
+            lb.laboratory_name AS laboratory_name,
+            nvl( sum( sr.area ), 0 ) AS area
+        FROM
+            pds_laboratory_basic lb
+            LEFT JOIN pds_scientific_research sr ON lb.id = sr.scientific_id
+        GROUP BY
+            lb.id,
+            lb.laboratory_name
+        ORDER BY
+            lb.id ASC
+    </select>
+    <insert id="insert">
+        INSERT INTO pds_scientific_research (
+            id,
+            scientific_id,
+            laboratory_name,
+            instrument_name,
+            serial_number,
+            specification_type,
+            instrument_value,
+            service_field,
+            purchase_time,
+            area,
+            funding,
+            self_financing,
+            update_time,
+            remark)
+        VALUES(
+            #{id},
+            #{scientificId},
+            #{laboratoryName},
+            #{instrumentName},
+            #{serialNumber},
+            #{specificationType},
+            #{instrumentValue},
+            #{serviceField},
+            #{purchaseTime},
+            #{area},
+            #{funding},
+            #{selfFinancing},
+            #{updateTime},
+            #{remark}
+            )
+    </insert>
+    <insert id="insertScientificResearchs" parameterType="java.util.List">
+        insert INTO pds_scientific_research (
+        id,
+        scientific_id,
+        laboratory_name,
+        instrument_name,
+        serial_number,
+        specification_type,
+        instrument_value,
+        service_field,
+        purchase_time,
+        area,
+        funding,
+        self_financing,
+        update_time,
+        remark
+        )
+        select T.* from (
+		<foreach collection="list" item="i" index="index"
+			separator="union all">
+			select
+			#{i.id},
+			<!-- #{h.scientificId}, -->
+			(SELECT P.ID FROM PDS_LABORATORY_BASIC P
+			WHERE
+			P.Laboratory_Name=#{i.laboratoryName}),
+			#{i.laboratoryName},
+            #{i.instrumentName},
+            #{i.serialNumber},
+            #{i.specificationType},
+            #{i.instrumentValue},
+            #{i.serviceField},
+            #{i.purchaseTime},
+            #{i.area},
+            #{i.funding},
+            #{i.selfFinancing},
+            sysdate,
+			<choose>
+				<when test="i.remark == null">''</when>
+				<otherwise>#{i.remark}</otherwise>
+			</choose>
+			from
+			dual
+		</foreach>
+		) T
+        <!-- values
+        <foreach collection="list" index="index" item="i" separator=","
+                 open="" close="">
+            (
+            #{i.id},
+            #{i.scientificId},
+            #{i.laboratoryName},
+            #{i.instrumentName},
+            #{i.serialNumber},
+            #{i.specificationType},
+            #{i.instrumentValue},
+            #{i.serviceField},
+            #{i.purchaseTime},
+            #{i.area},
+            #{i.funding},
+            #{i.selfFinancing},
+            #{i.updateTime},
+            #{i.remark}
+            )
+        </foreach> -->
+    </insert>
+</mapper>

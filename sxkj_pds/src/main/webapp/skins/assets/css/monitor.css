@@ -1,0 +1,588 @@
+/* created by py */
+/* 筛选条件 */
+
+.filter {
+    width: 100%;
+    padding: 10px 20px;
+}
+.city-filter {
+    width: 100%;
+}
+.city-filter li {
+    float: left;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 15px;
+    margin-right: 10px;
+    cursor: pointer;
+    color: #666666;
+}
+.city-filter li.active,.city-filter li:hover {
+    background: #4aabd5;
+    color: #fff;
+}
+/* 实验室筛选tab */
+.con-filter {
+    width: 164px;
+}
+.con-filter li {
+    position: relative;
+    padding:30px 0 30px 48px;
+    border-bottom: 1px solid #e3e3e3;
+    cursor: pointer;
+    color: #5f5f5f;
+}
+.con-filter li span {
+    display: inline-block;
+}
+.con-filter li:last-child {
+    border-bottom: none;
+}
+.con-filter li .conFilter-pic {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    background: url(../images/monitor/fmodule-gicon.png) no-repeat;
+    top: 35px;
+    left: 14px;
+}
+.con-filter li.active {
+    background: #20a8f7;
+    color: #fff;
+}
+.con-filter li.active .conFilter-pic {
+    background: url(../images/monitor/fmodule-wicon.png) no-repeat;
+}
+.con-filter li i {
+    position: absolute;
+    font-size: 18px;
+    top: 39px;
+    right: 20px;
+}
+/* 实验室筛选内容 */
+.filter-con {
+    width: 970px;
+}
+.filter-con-top {
+    width: 100%;
+    padding: 15px 10px;
+}
+.lablist {
+    width: 100%;
+}
+.lablist li {
+    float: left;
+    width: 32%;
+    margin-right: 2%;
+}
+.lablist li:last-child {
+    margin-right: 0;
+}
+.lablist li .lab-pic {
+    width: 100%;
+    height: 92px;
+}
+.lablist li>a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.lablist li .lab-pic>img {
+    width: 100%;
+    height: 100%;
+}
+.lablist li .lab-con {
+    width: 100%;
+    padding: 10px 15px;
+}
+.lablist li .lab-con .lab-name {
+    width: 100%;
+    height: 30px;
+}
+.lab-con .lab-name>h6 {
+    width: 60%;
+    padding: 0;
+    margin: 0;
+    color: #444444;
+    line-height: 30px;
+    font-size: 14px;
+}
+.lab-con .lab-name .label-y {
+    font-size: 12px;
+    color: #fff;
+    background: #f3be59;
+    margin-right: 6px;
+    margin-top: 3px;
+    padding: 0px 6px;
+    line-height: 20px;
+}
+.lab-con .lab-name .label-b {
+    font-size: 12px;
+    color: #fff;
+    background: #59bbf3;
+    padding: 0px 6px;
+    line-height: 20px;
+    margin-top: 4px;
+}
+.lab-con .lab-detail {
+    font-size: 12px;
+    color: #999999;
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+
+
+.filter-con-bottom {
+    width: 100%;
+}
+.lab-charts-wrap {
+    width: 49%;
+    position: relative;
+}
+.lab-charts-title {
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    font-size: 16px;
+    color: #0c8ce6;
+    padding-left: 10px;
+    background: #f5f5f5;
+}
+.lab-charts-title::before {
+    display: inline-block;
+    content: "";
+    width: 16px;
+    height: 16px;
+    background: url(../images/labAnalysis/modulehead-icon.png) no-repeat;
+    vertical-align:middle;
+    margin-right:4px;
+}
+#lab-distribute,#lab-fieldnum {
+    width:100%;
+    height: 270px;
+}
+
+/* 实验室人员预警 */
+
+.info-content table {
+    width: 100%;
+    border: 1px solid #ccc;
+}
+.table-wrap table th,
+.table-wrap table td {
+    border: 1px solid #ccc;
+    text-align: center;
+    padding: 4px 0;
+}
+
+.table-wrap table tr:nth-child(2n+2) {
+    background: #f9f9f9;
+}
+
+.table-wrap table tr:nth-child(n+2):hover {
+    background: #0a82ec;
+}
+
+.err-lv1 {
+    color: #008fff;
+}
+
+.err-lv2 {
+    color: #ff9544;
+}
+
+.err-lv3 {
+    color: #ff0000;
+}
+.table-wrap table>tbody td>.alert-btn {
+    display: inline-block;
+    padding: 0 10px;
+    height: 20px;
+    background: #4fabd3;
+    color: #fff;
+}
+#lab-degree-warn,#lab-age-warn,#lab-fluid,#lab-fluidperson {
+    width: 100%;
+    height: 260px;
+}
+.warn-tip {
+    position: absolute;
+    width: 166px;
+    /* height: 106px; */
+    background: #f8f8f8;
+    bottom: 0;
+    left: 0;
+    padding: 10px;
+    overflow: hidden;
+}
+.warn-tip .warn-tip-title {
+    color: #444444;
+    font-size: 12px;
+}
+.warn-tip .warn-tip-con {
+    margin-top: 16px;
+    font-size: 12px;
+    color: #999;
+}
+/* 五彩面板列表 */
+.colorful-pannel {
+    width: 100%;
+    padding: 10px;
+}
+.colorful-pannel li {
+    float: left;
+    width: 13%;
+    margin-right: 1.5%;
+}
+.colorful-pannel li:last-child {
+    margin-right: 0;
+}
+.colorful-pannel li>a {
+    position: relative;
+    width: 100%;
+    height: 90px;
+    padding:10px;
+    color: #fff;
+    text-align: center;
+}
+.colorful-pannel li:nth-child(1)>a {
+    background: #ffa4a4;
+}
+.colorful-pannel li:nth-child(2)>a {
+    background: #94ceff;
+}
+.colorful-pannel li:nth-child(3)>a {
+    background: #ffd178;
+}
+.colorful-pannel li:nth-child(4)>a {
+    background: #abbff1;
+}
+.colorful-pannel li:nth-child(5)>a {
+    background: #8ad688;
+}
+.colorful-pannel li:nth-child(6)>a {
+    background: #ffaee3;
+}
+.colorful-pannel li:nth-child(7)>a {
+    background: #a8a0e5;
+}
+.colorful-pannel li>a .pannel-pic {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+.colorful-pannel li>a  .pannel-num {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-style: italic;
+    font-size: 20px;
+}
+.colorful-pannel li>a .pannel-text {
+    line-height: 80px;
+}
+/* 项目情监测 */
+.infohead-search .select-wrap,.infohead-search a {
+    display: inline-block;
+    color: #666666;
+    margin-right: 10px;
+}
+
+.infohead-search .select-wrap select {
+    border: 1px solid #d5d5d5;
+    width: 96px;
+    height: 26px;
+    outline: none;
+}
+.infohead-search a i {
+    font-size: 12px;
+    margin-right: 4px
+}
+.project-tab {
+    width: 100%;
+    height: 33px;
+    line-height: 33px;
+    background: #f6f6f6;
+    margin: 20px 0;
+    
+}
+.project-tab li {
+    float: left;
+    padding: 0 30px;
+    height: 33px;
+    line-height: 33px;
+    color: #444444;
+    cursor: pointer;
+}
+.project-tab li.active {
+    background: #4fabd3;
+    color: #fff;
+}
+#project-field,#project-fund {
+    height: 270px
+}
+
+/* 单个实验室检测预警 */
+.labdetail-wrap {
+    width: 100%;
+}
+.labdetail-wrap .lab-pic {
+    width: 30%;
+    height: 238px;
+}
+.labdetail-wrap .lab-pic>img {
+    width: 100%;
+    height: 100%;
+}
+.labdetail-wrap .lab-info {
+    width: 70%;
+    padding: 10px;
+}
+.lab-info li.half-len {
+    float:left;
+    width: 50%;
+}
+.lab-info li.whole-len {
+    width:100%;
+}
+.lab-info li {
+    height:34px;
+    line-height: 34px;
+    padding-left: 10px
+}
+.lab-info li label {
+    display: inline-block;
+    color: #6f6f6f;
+}
+.lab-info li span {
+     display: inline-block;
+    color: #959595;
+}
+.lab-info li.whole-len label {
+    float: left;
+    width: 8%;
+}
+.lab-info li.whole-len span {
+    width: 92%;
+    float: left;
+     overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
+.alert-anlysis {
+    width: 100%;
+}
+.alert-anlysis label {
+    font-size: 16px;
+     display: inline-block;
+    color: #fff;
+    width: 176px;
+    height: 75px;
+    line-height: 75px;
+    background: #e86c6c;
+    text-align: center;
+}
+.alert-anlysis label img {
+    vertical-align: middle;
+    margin-top: -3px;
+}
+.alert-anlysis span {
+    font-size: 16px;
+    display: inline-block;
+    color: #959595;
+    padding-left: 20px;
+}
+.alert-anlysis span i {
+    font-size: 16px;
+    display: inline-block;
+    color: #fb0510;
+    font-weight: 600;
+}
+.info-content .left-pannel {
+    width: 70%;
+} 
+.info-content .right-pannel {
+    width: 28%;
+}
+.info-content .left-pannel .num-asc {
+    /* padding: 0 20px 20px; */
+}
+.num-asc li {
+    float: left;
+    width: 33.33%;
+    height: 48px;
+    line-height: 43px;
+    padding-left: 30px;
+}
+.num-asc li label {
+    display: inline-block;
+    color: #949494;
+    font-size: 16px;
+    font-weight: 400;
+}
+.num-asc li span {
+    font-size: 16px;
+     display: inline-block;
+    color: #656565;
+    margin:0 6px;
+}
+
+.num-asc li i.fa-arrow-down {
+    font-size: 16px;
+     display: inline-block;
+    color: #ef0303;
+}
+.num-asc li i.fa-arrow-up {
+    font-size: 16px;
+     display: inline-block;
+    color: #36a7ff;
+}
+.wholelab-charts-wrap {
+    width: 100%;
+}
+#person-flow {
+    width: 100%;
+    height: 330px;
+}
+#info-fill {
+    width: 100%;
+    height: 160px;
+}
+#person-age {
+    width:100%;
+    height:330px; 
+}
+.labproject-tab {
+    width: 100%;
+}
+.labproject-tab li {
+    float: left;
+    width: 32%;
+    height:60px;
+    line-height: 60px;
+    margin-right: 1.8%;
+    color: #fff;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+}
+.labproject-tab li .labproject-pic {
+    display: inline-block;
+    width: 32px;
+    height: 37px;
+}
+.labproject-tab li .labproject-pic>img {
+    width: 100%;
+    height: 100%;
+}
+.labproject-tab li:nth-child(1) {
+    background: #fea4a6
+}
+.labproject-tab li:nth-child(2) {
+     background: #96cefd
+}
+.labproject-tab li:nth-child(3) {
+     background: #ffd07e;
+     margin-right: 0;
+}
+
+#protal-info,#fruit-info {
+    height: 260px;
+}
+
+/* 改版之后新增样式 */
+i {
+    font-style: normal;
+}
+
+ul,
+li {
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    list-style: none;
+}
+
+.labinfo-content {
+    padding: 20px 30px;
+    background: #eeeeee;
+}
+
+.info-head {
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    background: #0c8ce6;
+    color: #fff;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.info-group {
+    background: #fff;
+}
+
+.info-content {
+    padding: 16px;
+}
+
+.infohead-act a {
+    display: inline-block;
+    padding: 0 16px;
+    height: 26px;
+    line-height: 26px;
+    background: #fff;
+    border-radius: 20px;
+    color: #047ade;
+    margin-top: 7px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+.marginBottom10 {
+    margin-bottom: 10px;
+}
+.marginTop10 {
+    margin-top: 10px;
+}
+.border {
+    border: 1px solid #e3e3e3;
+}
+.paddingLeftRight10 {
+    padding: 0 10px;
+}
+.padding {
+    padding: 10px;
+}
+.lab-nes{
+    border-top: 0 ;
+    border: 0;
+}
+.bgcgrey {
+    background: #f5f5f5;
+}
+
+.bgcblue {
+    background: #eaf5f6;
+}
+
+.bgclightgrey {
+    background: #fafafa;
+}

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.inspur.tech.pds.dao.IPdsHorizontalTopicDao">
+	<resultMap type="com.inspur.tech.pds.data.HorizontalTopicDto"
+		id="HorizontalTopicDto">
+		<id column="id" property="id" jdbcType="VARCHAR" javaType="String" />
+		<result column="scientific_id" property="scientificId"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="laboratory_name" property="laboratoryName"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="project_name" property="projectName"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="project_number" property="projectNumber"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="project_principal" property="projectPrincipal"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="id_type" property="idType" jdbcType="VARCHAR"
+			javaType="String" />
+		<result column="id_number" property="idNumber"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="start_stop_date" property="startStopDate"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="actually_received_funds"
+			property="actuallyReceivedFunds" jdbcType="NUMERIC"
+			javaType="java.math.BigDecimal" />
+		<result column="organization" property="organization"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="update_time" property="updateTime"
+			jdbcType="TIMESTAMP" javaType="java.sql.Timestamp" />
+		<result column="remark" property="remark" jdbcType="VARCHAR"
+			javaType="String" />
+	</resultMap>
+	<!-- &lt;!&ndash; &lt;!&ndash; &lt;!&ndash; &lt;!&ndash; 查询列表 数据库已经加了评审次数和雀神次数不用关联第3个表了 
+		&ndash;&gt;&ndash;&gt;&ndash;&gt;&ndash;&gt; -->
+	<select id="listHorizontalTopic" parameterType="map"
+		resultMap="HorizontalTopicDto">
+		SELECT
+		id,
+		scientific_id,
+		laboratory_name,
+		project_name,
+		project_number,
+		project_principal,
+		id_type,
+		id_number,
+		start_stop_date,
+		actually_received_funds,
+		organization,
+		update_time,
+		remark
+		FROM
+		pds_horizontal_topic
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="scientificId != null and scientificId!=''">
+				and scientific_id = #{scientificId}
+			</if>
+			<if test="laboratoryName != null and laboratoryName!=''">
+				and laboratory_name like
+				CONCAT(CONCAT('%',#{laboratoryName},'%'))
+			</if>
+			<if test="projectName != null and projectName!=''">
+				and project_name like
+				CONCAT(CONCAT('%',#{projectName},'%'))
+			</if>
+			<if test="projectNumber != null and projectNumber!=''">
+				and project_number = #{projectNumber}
+			</if>
+			<if test="projectPrincipal != null and projectPrincipal!=''">
+				and project_principal = #{projectPrincipal}
+			</if>
+			<if test="idType != null and idType!=''">
+				and id_type = #{idType}
+			</if>
+			<if test="idNumber != null and idNumber!=''">
+				and id_number = #{idNumber}
+			</if>
+			<if test="organization != null and organization!=''">
+				and organization = #{organization}
+			</if>
+		</trim>
+	</select>
+	<select id="selectHorizontalTopicById" parameterType="string"
+		resultMap="HorizontalTopicDto">
+		SELECT
+		id,
+		scientific_id,
+		laboratory_name,
+		project_name,
+		project_number,
+		project_principal,
+		id_type,
+		id_number,
+		start_stop_date,
+		actually_received_funds,
+		organization,
+		update_time,
+		remark
+		FROM
+		pds_horizontal_topic
+		where id = #{id,jdbcType=VARCHAR}
+	</select>
+	<insert id="insert">
+		INSERT INTO pds_horizontal_topic (
+		id,
+		scientific_id,
+		laboratory_name,
+		project_name,
+		project_number,
+		project_principal,
+		id_type,
+		id_number,
+		start_stop_date,
+		actually_received_funds,
+		organization,
+		update_time,
+		remark)
+		VALUES(
+		#{id},
+		#{scientificId},
+		#{laboratoryName},
+		#{projectName},
+		#{projectNumber},
+		#{projectPrincipal},
+		#{idType},
+		#{idNumber},
+		#{startStopDate},
+		#{actuallyReceivedFunds},
+		#{organization},
+		#{updateTime},
+		#{remark})
+	</insert>
+	<insert id="insertHorizontalTopics"
+		parameterType="java.util.List">
+		insert INTO pds_horizontal_topic (
+		id,
+		scientific_id,
+		laboratory_name,
+		project_name,
+		project_number,
+		project_principal,
+		id_type,
+		id_number,
+		start_stop_date,
+		actually_received_funds,
+		organization,
+		update_time,
+		remark
+		)
+		select T.* from (
+		<foreach collection="list" item="h" index="index"
+			separator="union all">
+			select
+			#{h.id},
+			<!-- #{h.scientificId}, -->
+			(SELECT P.ID FROM PDS_LABORATORY_BASIC P
+			WHERE
+			P.Laboratory_Name=#{h.laboratoryName}),
+			#{h.laboratoryName},
+			#{h.projectName},
+			#{h.projectNumber},
+			#{h.projectPrincipal},
+			#{h.idType},
+			#{h.idNumber},
+			#{h.startStopDate},
+			#{h.actuallyReceivedFunds},
+			#{h.organization},
+			sysdate,
+			<choose>
+				<when test="h.remark == null">''</when>
+				<otherwise>#{h.remark}</otherwise>
+			</choose>
+			from
+			dual
+		</foreach>
+		) T
+		<!-- values <foreach collection="list" index="index" item="h" separator="," 
+			open="" close=""> ( #{h.id}, #{h.scientificId}, #{h.laboratoryName}, #{h.projectName}, 
+			#{h.projectNumber}, #{h.projectPrincipal}, #{h.idType}, #{h.idNumber}, #{h.startStopDate}, 
+			#{h.actuallyReceivedFunds}, #{h.organization}, #{h.updateTime}, #{h.remark} 
+			) </foreach> -->
+	</insert>
+</mapper>

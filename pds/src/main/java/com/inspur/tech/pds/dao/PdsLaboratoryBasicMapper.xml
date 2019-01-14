@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.inspur.tech.pds.dao.IPdsLaboratoryBasicDao">
+	<resultMap type="com.inspur.tech.pds.data.LaboratoryBasicDto"
+		id="LaboratoryBasicDto">
+		<id column="id" property="id" jdbcType="VARCHAR" javaType="String" />
+		<result column="laboratory_name" property="laboratoryName"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="address" property="address" jdbcType="VARCHAR"
+			javaType="String" />
+		<result column="area" property="area" jdbcType="VARCHAR"
+			javaType="String" />
+		<result column="laboratory_type" property="laboratoryType"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="approval_time" property="approvalTime"
+			jdbcType="DATE" javaType="java.util.Date" />
+		<result column="laboratory_director"
+			property="laboratoryDirector" jdbcType="VARCHAR" javaType="String" />
+		<result column="birthdate" property="birthdate" jdbcType="DATE"
+			javaType="java.util.Date" />
+		<result column="professional_title"
+			property="professionalTitle" jdbcType="VARCHAR" javaType="String" />
+		<result column="technical_position"
+			property="technicalPosition" jdbcType="VARCHAR" javaType="String" />
+		<result column="subject_expertise" property="subjectExpertise"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="education" property="education"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="contact_name" property="contactName"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="contact_telephone" property="contactTelephone"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="contact_email" property="contactEmail"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="competent_organization"
+			property="competentOrganization" jdbcType="VARCHAR" javaType="String" />
+		<result column="relying_organization"
+			property="relyingOrganization" jdbcType="VARCHAR" javaType="String" />
+		<result column="organization_property"
+			property="organizationProperty" jdbcType="VARCHAR" javaType="String" />
+		<result column="subject_field" property="subjectField"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="research_direction"
+			property="researchDirection" jdbcType="VARCHAR" javaType="String" />
+		<result column="knowledge_allocation_quota"
+			property="knowledgeAllocationQuota" jdbcType="VARCHAR"
+			javaType="String" />
+		<result column="total_wages" property="totalWages"
+			jdbcType="VARCHAR" javaType="String" />
+		<result column="update_time" property="updateTime"
+			jdbcType="TIMESTAMP" javaType="java.sql.Timestamp" />
+		<result column="remark" property="remark" jdbcType="VARCHAR"
+			javaType="String" />
+	</resultMap>
+	<!-- 查询列表 数据库已经加了评审次数和雀神次数不用关联第3个表了 -->
+	<select id="listLaboratoryBasic" parameterType="map"
+		resultMap="LaboratoryBasicDto">
+		SELECT
+		id,
+		laboratory_name,
+		address,
+		area,
+		laboratory_type,
+		approval_time,
+		laboratory_director,
+		birthdate,
+		professional_title,
+		technical_position,
+		subject_expertise,
+		education,
+		contact_name,
+		contact_telephone,
+		contact_email,
+		competent_organization,
+		relying_organization,
+		organization_property,
+		subject_field,
+		research_direction,
+		knowledge_allocation_quota,
+		total_wages,
+		update_time,
+		remark
+		FROM
+		pds_laboratory_basic
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+			<if test="id != null and id!=''">
+				and id = #{id}
+			</if>
+			<if test="laboratoryName != null and laboratoryName!=''">
+				and laboratory_name like
+				CONCAT(CONCAT('%',#{laboratoryName},'%'))
+			</if>
+			<if test="area != null and area!=''">
+				and area = #{area}
+			</if>
+			<if test="laboratoryType != null and laboratoryType!=''">
+				and laboratory_type = #{laboratoryType}
+			</if>
+			<if test="laboratoryDirector != null and laboratoryDirector!=''">
+				and laboratory_director = #{laboratoryDirector}
+			</if>
+			<if
+				test="competentOrganization != null and competentOrganization!=''">
+				and competent_organization = #{competentOrganization}
+			</if>
+			<if test="relyingOrganization != null and relyingOrganization!=''">
+				and relying_organization = #{relyingOrganization}
+			</if>
+			<if
+				test="organizationProperty != null and organizationProperty!=''">
+				and organization_property = #{organizationProperty}
+			</if>
+			<if test="subjectField != null and subjectField!=''">
+				and subject_field = #{subjectField}
+			</if>
+			<if test="researchDirection != null and researchDirection!=''">
+				and research_direction = #{researchDirection}
+			</if>
+		</trim>
+	</select>
+	<select id="selectLaboratoryBasicIdByName"
+		parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT P.ID
+		FROM PDS_LABORATORY_BASIC P
+		WHERE P.Laboratory_Name = #{name}
+	</select>
+	<select id="selectLaboratoryBasicById" parameterType="string"
+		resultMap="LaboratoryBasicDto">
+		SELECT
+		id,
+		laboratory_name,
+		address,
+		area,
+		laboratory_type,
+		approval_time,
+		laboratory_director,
+		birthdate,
+		professional_title,
+		technical_position,
+		subject_expertise,
+		education,
+		contact_name,
+		contact_telephone,
+		contact_email,
+		competent_organization,
+		relying_organization,
+		organization_property,
+		subject_field,
+		research_direction,
+		knowledge_allocation_quota,
+		total_wages,
+		update_time,
+		remark
+		FROM pds_laboratory_basic
+		where id =
+		#{id,jdbcType=VARCHAR}
+	</select>
+	<insert id="insert">
+		INSERT INTO pds_laboratory_basic (
+		id,
+		laboratory_name,
+		address,
+		area,
+		laboratory_type,
+		approval_time,
+		laboratory_director,
+		birthdate,
+		professional_title,
+		technical_position,
+		subject_expertise,
+		education,
+		contact_name,
+		contact_telephone,
+		contact_email,
+		competent_organization,
+		relying_organization,
+		organization_property,
+		subject_field,
+		research_direction,
+		knowledge_allocation_quota,
+		total_wages,
+		update_time,
+		remark)
+		VALUES(
+		#{id},
+		#{laboratoryName},
+		#{address},
+		#{area},
+		#{laboratoryType},
+		#{approvalTime},
+		#{laboratoryDirector},
+		#{birthdate},
+		#{professionalTitle},
+		#{technicalPosition},
+		#{subjectExpertise},
+		#{education},
+		#{contactName},
+		#{contactTelephone},
+		#{contactEmail},
+		#{competentOrganization},
+		#{relyingOrganization},
+		#{organizationProperty},
+		#{subjectField},
+		#{researchDirection},
+		#{knowledgeAllocationQuota},
+		#{totalWages},
+		#{updateTime},
+		#{remark})
+	</insert>
+	<insert id="insertLaboratoryBasics"
+		parameterType="java.util.List">
+		insert INTO pds_laboratory_basic (
+		id,
+		laboratory_name,
+		address,
+		area,
+		laboratory_type,
+		approval_time,
+		laboratory_director,
+		birthdate,
+		professional_title,
+		technical_position,
+		subject_expertise,
+		education,
+		contact_name,
+		contact_telephone,
+		contact_email,
+		competent_organization,
+		relying_organization,
+		organization_property,
+		subject_field,
+		research_direction,
+		knowledge_allocation_quota,
+		total_wages,
+		update_time,
+		remark
+		)
+		select T.* from (
+		<foreach collection="list" item="l" index="index"
+			separator="union all">
+			select
+			#{l.id},
+			#{l.laboratoryName},
+			#{l.address},
+			#{l.area},
+			#{l.laboratoryType},
+			#{l.approvalTime},
+			#{l.laboratoryDirector},
+			#{l.birthdate},
+			#{l.professionalTitle},
+			#{l.technicalPosition},
+			#{l.subjectExpertise},
+			#{l.education},
+			#{l.contactName},
+			#{l.contactTelephone},
+			#{l.contactEmail},
+			#{l.competentOrganization},
+			#{l.relyingOrganization},
+			#{l.organizationProperty},
+			#{l.subjectField},
+			#{l.researchDirection},
+			#{l.knowledgeAllocationQuota},
+			#{l.totalWages},
+			sysdate,
+			#{l.remark}
+			from dual
+		</foreach>
+		) T
+
+		<!-- values<foreach collection="list" index="index" item="l" separator="," 
+			open="" close=""> ( #{l.id}, #{l.laboratoryName}, #{l.address}, #{l.area}, 
+			#{l.laboratoryType}, #{l.approvalTime}, #{l.laboratoryDirector}, #{l.birthdate}, 
+			#{l.professionalTitle}, #{l.technicalPosition}, #{l.subjectExpertise}, #{l.education}, 
+			#{l.contactName}, #{l.contactTelephone}, #{l.contactEmail}, #{l.competentOrganization}, 
+			#{l.relyingOrganization}, #{l.organizationProperty}, #{l.subjectField}, #{l.researchDirection}, 
+			#{l.knowledgeAllocationQuota}, #{l.totalWages}, #{l.updateTime}, sysdate, 
+			#{l.remark}) </foreach> -->
+	</insert>
+</mapper>

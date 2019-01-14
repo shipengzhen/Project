@@ -1,0 +1,29 @@
+banner:
+  charset: UTF-8
+server:
+  port: 8080
+  context-path: /pet/
+  tomcat:
+    uri-encoding: UTF-8
+spring:
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  messages:
+    encoding: UTF-8
+debug: true
+logging:
+  level:
+    org.springframework.web: info
+    com.spz.pet: debug
+wx:
+  miniapp:
+    configs:
+        - appid: wx0a974225796472c9
+          secret: 02ecf09b498491c157697609b28ccce5
+          token: #微信小程序消息服务器配置的token
+          aesKey: #微信小程序消息服务器配置的EncodingAESKey
+          msgDataFormat: JSON
+

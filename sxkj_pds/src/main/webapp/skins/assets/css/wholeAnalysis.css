@@ -1,0 +1,134 @@
+/* created by py */
+i {
+    font-style: normal;
+}
+.whanmain-content {
+    padding: 0 30px 30px;
+}
+.lunbo {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+.lunbo .swiper-container {
+     width: 100%;
+     height: 200px;
+     overflow: hidden;
+}
+.lunbo .swiper-container .swiper-slide img{
+  height: 100%;
+  width: 100%
+}
+.wareport-wrap {
+    width: 100%;
+    background: #fff;
+    padding: 16px;
+}
+.wareport-con {
+    width: 90%;
+    color: #555555;
+    font-size: 12px;
+}
+.wareport-btn {
+    width:10%;
+    text-align: right
+}
+.wareport-btn>a {
+    display: inline-block;
+    padding:6px 16px;
+    color: #fff;
+    background: #0c8ce6;
+}
+.wareport-con i {
+    font-weight: 600;
+}
+.function-title .search-wrap {
+    width: 400px;
+    padding: 0;
+}
+.function-title .search-wrap select {
+    width: 150px;
+    height: 26px;
+    border: 1px solid #bfcfd7;
+    border-radius: 4px;
+    background: #fff;
+    color: #555555;
+    padding-left: 20px;
+    margin-right: 10px;
+}
+.function-title .search-wrap a {
+    display: inline-block;
+    padding: 0 8px;
+    height: 26px;
+    line-height: 26px;
+    color: #fff;
+    background: #0c8ce6;
+    border-radius: 4px;
+}
+.function-con {
+    width: 100%;
+    background: #fff;
+    padding: 16px;
+}
+.func-row {
+    width: 100%;
+}
+.func-row li {
+    float: left;
+}
+.func-row li.funcrow-first {
+    width:20%;
+    height: 312px;
+    background: #e4f2fc;
+    text-align: center;
+}
+.func-row li.funcrow-module {
+    width: 26.66%;
+}
+.funcrowmodule-con {
+    height: 270px;
+}
+.func-row li .funcrow-pic {
+    position: relative;
+    display: inline-block;
+    width: 212px;
+    height: 266px;
+    margin-top: 22px;
+}
+.func-row li .funcrow-pic1 {
+    background: url(../images/wholeAnalysis/funcrow-pic1.png) no-repeat;
+}
+.func-row li .funcrow-pic2 {
+    background: url(../images/wholeAnalysis/funcrow-pic2.png) no-repeat;
+}
+.func-row li .funcrow-pic3 {
+    background: url(../images/wholeAnalysis/funcrow-pic3.png) no-repeat;
+}
+.func-row li .funcrow-pic .funcrow-text {
+    position: absolute;
+    display: block;
+    width: 100%;
+    color: #fff;
+    font-size: 17px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    bottom: 70px;
+    letter-spacing: 4px;
+}
+
+
+
+
+
+
+
+
+
+
+.col-blue {
+    color: #0c8ce6!important;
+}
+.col-red {
+    color: #ff5610 !important;
+}

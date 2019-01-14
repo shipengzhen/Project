@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spz.pet.business.message.mapper.ITradeInfoMapper">
+	<!-- 新增交易信息 -->
+	<insert id="insertTradeInfo" parameterType="com.spz.pet.business.message.domain.TradeInfo">
+		INSERT INTO T_TRADE_INFO
+		VALUES
+			( NULL,#{userId},#{address},#{message},#{contact},#{type},#{latitude},#{longitude})
+	</insert>
+</mapper>
