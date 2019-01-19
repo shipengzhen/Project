@@ -48,16 +48,20 @@
 			<version>${aspectjweaver.version}</version>
 		</dependency>
 
-		<!-- 测试依赖 -->
-		<!-- https://mvnrepository.com/artifact/junit/junit -->
+			<!-- 测试依赖 -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.11</version>
+			<version>4.12</version>
 			<!--指定范围在测试时才会加载 -->
 			<scope>test</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
